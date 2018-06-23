@@ -25,7 +25,7 @@ struct GraphEdge{
 		w = _w;
 		edgeLabel = _edgeLabel;
 	}
-} edgeList[EDGES];
+} edgeList[EDGES], distinctEdges[EDGES];
 
 int nodeLabels[NODES];
 
@@ -53,7 +53,7 @@ struct Subgraphs{
 
 /**************** GLOBAL VARIABLES *********************************/
 
-int numberOfNodes,numberOfEdges,numberOfNodeLabels,numberOfEdgeLabels;
+int numberOfNodes,numberOfEdges,numberOfNodeLabels,numberOfEdgeLabels, numberOfDistinctEdges;
 vector <int> adj[NODES]; // adjacency list
 int startIterator[NODES];
 double threshold;
@@ -70,6 +70,9 @@ Number of Nodes
 Number of Edges
 Number of Node Labels
 Number of Edge Labels
+
+For i=0 to number of nodes-1:
+    Label(node i)
 
 For i = 0 to number of egdes -1:
 	
@@ -199,7 +202,7 @@ bool cmpEdges(GraphEdge a, GraphEdge b){
 	return false;
 }
 
-void processEdgeList(){
+inline void processEdgeList(){
 	sort(edgeList, edgeList+numberOfEdges, cmpEdges);
 	for(int i=0; i<numberOfEdges; i++){
 		adj[edgeList[i].u].push_back(i);
@@ -211,6 +214,33 @@ void printEdgeList(){
 	for(int i=0; i<numberOfEdges; i++){
 		printf("%d %d %f %d\n", edgeList[i].u, edgeList[i].v, edgeList[i].w, edgeList[i].edgeLabel);
 	}
+}
+
+inline bool hasSameLabels(GraphEdge a, GraphEdge b){
+	return (nodeLabels[a.u]==nodeLabels[b.u] && nodeLabels[a.v]==nodeLabels[b.v] && a.edgeLabel==b.edgeLabel);
+}
+
+inline void insertDistinctEdge(GraphEdge a){
+	distinctEdges[numberOfDistinctEdges]=a;
+	numberOfDistinctEdges++;
+}
+
+inline void findDistinctEdges(){ //Assumes edges in EdgeList are sorted in canonical order
+	numberOfDistinctEdges=0;
+	insertDistinctEdge(edgeList[0]);
+	for(int i=1; i<numberOfEdges; i++){
+		if(!hasSameLabels(edgeList[i-1], edgeList[i])){
+			insertDistinctEdge(edgeList[i]);
+		}
+	}
+}
+
+inline void printDistinctEdges(){ //Assumes edges in EdgeList are sorted in canonical order
+	puts("");
+	for(int i=0; i<numberOfDistinctEdges; i++){
+		printf("%d %d %d\n", nodeLabels[distinctEdges[i].u], nodeLabels[distinctEdges[i].v], distinctEdges[i].edgeLabel); 
+	}
+	puts("");
 }
 
 void subgraphExtension(Subgraphs curr)
@@ -226,5 +256,7 @@ int main()
 	printEdgeSorted();
 	processEdgeList();
 	printEdgeList();
+	findDistinctEdges();
+	printDistinctEdges();
 	return 0;
 }
