@@ -6,11 +6,8 @@ using namespace std;
 #define NODELABELS 1005
 #define EDGELABELS 1005
 
-#define mp make_pair
-#define pr pair<int, double>
-#define mx 100005
-
-
+typedef pair <int, int> pii;
+typedef pair < pair <int, int>, int> ppi;
 /***************************Structures*************************************/
 
 struct GraphEdge{
@@ -45,11 +42,13 @@ struct EdgeLabels{
 struct Subgraphs{
 	int numberOfNodes;
 	int numberOfEdges;
-    vector < vector <int> > adjList;
+    vector < vector <int> > adjNode;
+    vector < vector <int> > adjLabel;
     vector <int> nodeLabels;
-    stack <int> nodeStack;
+    stack <int> rightmostPath;
 };
 
+map < ppi , double > labelRelations;
 
 /**************** GLOBAL VARIABLES *********************************/
 
@@ -195,7 +194,7 @@ void takeInput()
 /**********************************************************************/
 
 
-bool cmpEdges(GraphEdge a, GraphEdge b){
+inline bool cmpEdges(GraphEdge a, GraphEdge b){
 	if(nodeLabels[a.u]!=nodeLabels[b.u]) return nodeLabelList[nodeLabels[a.u]].indexInSortedList<nodeLabelList[nodeLabels[b.u]].indexInSortedList;
 	if(nodeLabels[a.v]!=nodeLabels[b.v]) return nodeLabelList[nodeLabels[a.v]].indexInSortedList<nodeLabelList[nodeLabels[b.v]].indexInSortedList;
 	if(a.edgeLabel!=b.edgeLabel) return edgeLabelList[a.edgeLabel].indexInSortedList<edgeLabelList[b.edgeLabel].indexInSortedList;
@@ -243,13 +242,99 @@ inline void printDistinctEdges(){ //Assumes edges in EdgeList are sorted in cano
 	puts("");
 }
 
-void subgraphExtension(Subgraphs curr)
+inline void findLabelRelations(){
+	labelRelations.clear();
+	ppi newp;
+	for(int i=0; i<numberOfEdges; i++){
+		newp=ppi(pii(nodeLabels[edgeList[i].u], nodeLabels[edgeList[i].v]), edgeList[i].edgeLabel);
+		labelRelations[newp]=edgeList[i].w;
+	}
+}
+
+inline void printLabelRelations(){
+	ppi temp;
+	for(auto it=labelRelations.begin(); it!=labelRelations.end(); it++){
+		temp=it->first;
+		cout<<temp.first.first<<" "<<temp.first.second<<" "<<temp.second<<" "<<(it->second)<<endl; 
+	}
+}
+
+
+Subgraphs extendBackwardEdge(Subgraphs currSubgraph, int u, int v, int edgeLabel){
+	assert(v<u);
+	Subgraphs newSubgraph;
+	newSubgraph=currSubgraph;
+	newSubgraph.numberOfEdges++;
+	newSubgraph.adjNode[u].push_back(v);
+	newSubgraph.adjLabel[u].push_back(edgeLabel);
+	return newSubgraph;
+}
+
+Subgraphs extendForwardEdge(Subgraphs currSubgraph, int u, int v, int vLabel, int edgeLabel){
+	assert(v>u);
+	Subgraphs newSubgraph;
+	vector <int> newVec;
+	newSubgraph=currSubgraph;
+	newSubgraph.numberOfNodes++;
+	newSubgraph.numberOfEdges++;
+	newSubgraph.adjNode[u].push_back(v);
+	newSubgraph.adjLabel[u].push_back(edgeLabel);
+	newSubgraph.adjNode.push_back(newVec);
+	newSubgraph.adjLabel.push_back(newVec);
+	newSubgraph.nodeLabels.push_back(vLabel);
+	newSubgraph.rightmostPath.push(v);
+	return newSubgraph;
+}
+int globalVariable = 0;
+void subgraphExtension(Subgraphs currSubgraph){
+	globalVariable++;
+	if(globalVariable%100==0)cout<<globalVariable<<endl;
+	if(rand()%100>20) return;
+	Subgraphs newSubgraph;
+	int currNode;
+	int low, sz;
+	while(!currSubgraph.rightmostPath.empty()){
+		currNode=currSubgraph.rightmostPath.top();
+		sz=currSubgraph.adjNode[currNode].size();
+		low=(sz==0) ? 0 : currSubgraph.adjNode[currNode][sz-1]+1;
+		for(int i=low; i<currNode; i++){
+			for(int j=0; j<numberOfEdgeLabels; j++){
+				newSubgraph=extendBackwardEdge(currSubgraph, currNode, i, j);
+				subgraphExtension(newSubgraph);
+			}
+		}
+		for(int i=0; i<numberOfNodeLabels; i++){
+			for(int j=0; j<numberOfEdgeLabels; j++){
+				newSubgraph=extendForwardEdge(currSubgraph, currNode, currSubgraph.numberOfNodes, i, j);
+				subgraphExtension(newSubgraph);
+			}
+		}
+		currSubgraph.rightmostPath.pop();
+	}
+}
+void gSpanInit()
 {
-	
+	Subgraphs newSubgraph;
+	for(int i = 0;i < numberOfDistinctEdges;i++)
+	{
+		newSubgraph.numberOfNodes = 2;
+		newSubgraph.numberOfEdges = 1;
+		newSubgraph.adjNode.resize(2);
+		newSubgraph.adjLabel.resize(2);
+		newSubgraph.adjNode[0].push_back(1);
+		newSubgraph.adjLabel[0].push_back(distinctEdges[i].edgeLabel);
+		newSubgraph.rightmostPath.push(0);
+		newSubgraph.rightmostPath.push(1);
+		newSubgraph.nodeLabels.push_back(nodeLabels[distinctEdges[i].u]);
+		newSubgraph.nodeLabels.push_back(nodeLabels[distinctEdges[i].v]);
+		subgraphExtension(newSubgraph);
+	}
 }
 int main()
 {
 	takeInput();
+	findLabelRelations();
+	printLabelRelations();
 	sortNodeLabels();
 	printSorted();
 	sortEdgeLabels();
@@ -258,5 +343,6 @@ int main()
 	printEdgeList();
 	findDistinctEdges();
 	printDistinctEdges();
+	gSpanInit();
 	return 0;
 }
