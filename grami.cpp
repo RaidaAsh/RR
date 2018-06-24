@@ -285,11 +285,37 @@ Subgraphs extendForwardEdge(Subgraphs currSubgraph, int u, int v, int vLabel, in
 	newSubgraph.rightmostPath.push(v);
 	return newSubgraph;
 }
+
+void printSubgraph(Subgraphs currSubgraph)
+{
+	//getchar();
+	printf("\n%d %d\n",currSubgraph.numberOfNodes, currSubgraph.numberOfEdges);
+	for(int i = 0;i < currSubgraph.numberOfNodes;i++)
+	{
+		for(unsigned int j = 0;j < currSubgraph.adjNode[i].size();j++)
+		{
+			printf("%d %d %d\n",i,currSubgraph.adjNode[i][j],currSubgraph.adjLabel[i][j]);
+		}
+	}
+	printf("Labels : \n");
+	for(unsigned int i = 0;i< currSubgraph.nodeLabels.size();i++)
+	{
+		printf("%d\n",currSubgraph.nodeLabels[i]);
+	}
+	if(currSubgraph.rightmostPath.empty())printf("Empty\n");
+	else printf("Stack top : %d\n",currSubgraph.rightmostPath.top());
+}
 int globalVariable = 0;
+char terminator[5];
 void subgraphExtension(Subgraphs currSubgraph){
-	globalVariable++;
-	if(globalVariable%100==0)cout<<globalVariable<<endl;
-	if(rand()%100>20) return;
+	printSubgraph(currSubgraph);
+	printf("Do you want to terminate?\n");
+	cin>>terminator;
+	if(terminator[0] == 'y')
+	{
+		printf("Terminated\n");
+		return;
+	}
 	Subgraphs newSubgraph;
 	int currNode;
 	int low, sz;
@@ -317,6 +343,10 @@ void gSpanInit()
 	Subgraphs newSubgraph;
 	for(int i = 0;i < numberOfDistinctEdges;i++)
 	{
+		newSubgraph.adjNode.clear();
+		newSubgraph.adjLabel.clear();
+		newSubgraph.nodeLabels.clear();
+		while(!newSubgraph.rightmostPath.empty())newSubgraph.rightmostPath.pop();
 		newSubgraph.numberOfNodes = 2;
 		newSubgraph.numberOfEdges = 1;
 		newSubgraph.adjNode.resize(2);
@@ -328,6 +358,8 @@ void gSpanInit()
 		newSubgraph.nodeLabels.push_back(nodeLabels[distinctEdges[i].u]);
 		newSubgraph.nodeLabels.push_back(nodeLabels[distinctEdges[i].v]);
 		subgraphExtension(newSubgraph);
+		printf("Done with this edge\n");
+		
 	}
 }
 int main()
