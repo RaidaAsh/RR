@@ -30,6 +30,7 @@ struct NodeLabels{
         int label;
         int count; //Number of nodes with corresponding label 
 		int indexInSortedList;
+		vector <int> nodesWithLabel;
 }nodeLabelList[NODELABELS], sortedNodeLabels[NODELABELS];
 
 struct EdgeLabels{
@@ -50,14 +51,18 @@ struct Subgraphs{
 
 map < ppi , double > labelRelations;
 
+struct CSP{
+	vector< vector<int>> domain;
+};
 /**************** GLOBAL VARIABLES *********************************/
 
 int numberOfNodes,numberOfEdges,numberOfNodeLabels,numberOfEdgeLabels, numberOfDistinctEdges;
 vector <int> adj[NODES]; // adjacency list
 int startIterator[NODES];
 double threshold;
+int leastEdgeRemaining = 0;
 vector <Subgraphs> freqSubgraphs;
-
+set <pii> outgoingLabels[NODES],incomingLabels[NODES];
 /**************************INPUT FORMAT**********************************/
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~ 0 based ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -161,6 +166,7 @@ void printEdgeSorted(){
 /*****************************************************************************/
 /****************************TAKE INPUT***************************************/
 /*****************************************************************************/
+ 
 void takeInput()
 {
 	int label;
@@ -177,6 +183,7 @@ void takeInput()
 		assert(label<NODELABELS && label>= 0);
 		nodeLabelList[label].count++;
 		nodeLabels[i]=label;
+		nodeLabelList[label].nodesWithLabel.push_back(i);
 	}
 	
 	for(int i = 0;i < numberOfEdgeLabels;i++)
@@ -188,6 +195,8 @@ void takeInput()
 	{
 		scanf("%d %d %lf %d",&edgeList[i].u,&edgeList[i].v,&edgeList[i].w,&edgeList[i].edgeLabel);
 		edgeLabelList[edgeList[i].edgeLabel].count++;
+		outgoingLabels[edgeList[i].u].insert(pii(edgeList[i].v,edgeList[i].edgeLabel));
+		incomingLabels[edgeList[i].v].insert(pii(edgeList[i].u,edgeList[i].edgeLabel));
 	}
 	scanf("%lf",&threshold);
 }
@@ -318,7 +327,7 @@ inline bool randomTermination(){
 	return (rand()%100)<80;
 }
 
-void subgraphExtension(Subgraphs currSubgraph){
+void subgraphExtension(Subgraphs currSubgraph, CSP csp){
 	globalVariable++;
 	if((globalVariable%10)==0) printf("%d\n", globalVariable);
 	//printSubgraph(currSubgraph);
@@ -346,14 +355,14 @@ void subgraphExtension(Subgraphs currSubgraph){
 			for(int j=0; j<numberOfEdgeLabels; j++){
 				if(labelRelations.find(ppi(pii(currSubgraph.nodeLabels[currNode], currSubgraph.nodeLabels[i]), j))==labelRelations.end()) continue;
 				newSubgraph=extendBackwardEdge(currSubgraph, currNode, i, j);
-				subgraphExtension(newSubgraph);
+				subgraphExtension(newSubgraph,csp);
 			}
 		}
 		for(int i=0; i<numberOfNodeLabels; i++){
 			for(int j=0; j<numberOfEdgeLabels; j++){
 				if(labelRelations.find(ppi(pii(currSubgraph.nodeLabels[currNode], i), j))==labelRelations.end()) continue;
 				newSubgraph=extendForwardEdge(currSubgraph, currNode, currSubgraph.numberOfNodes, i, j);
-				subgraphExtension(newSubgraph);
+				subgraphExtension(newSubgraph,csp);
 			}
 		}
 		currSubgraph.rightmostPath.pop();
@@ -379,15 +388,43 @@ void initializeSingleEdgeGraph(GraphEdge e, Subgraphs &sub){
 	sub.nodeLabels.push_back(nodeLabels[e.u]);
 	sub.nodeLabels.push_back(nodeLabels[e.v]);
 }
-
+CSP findDomain(int edgeIndex)
+{
+	CSP newCSP;
+	GraphEdge currEdge = edgeList[edgeIndex];
+	vector <int> nodesWithLabelU = nodeLabelList[nodeLabels[currEdge.u]].nodesWithLabel;
+	vector <int> nodesWithLabelV = nodeLabelList[nodeLabels[currEdge.v]].nodesWithLabel;
+	int sz = nodesWithLabelU.size();
+	int currNode;
+	for(int i = 0;i < sz; i++)
+	{
+		currNode = nodesWithLabelU[i];
+		if(outgoingLabels[currNode].find(pii(currEdge.v,currEdge.edgeLabel)) != outgoingLabels[currNode].end())
+		{
+			newCSP.domain[currEdge.u].push_back(currEdge.v);
+		}
+	}
+	sz = nodesWithLabelV.size();
+	for(int i = 0;i < sz; i++)
+	{
+		currNode = nodesWithLabelV[i];
+		if(incomingLabels[currNode].find(pii(currEdge.u,currEdge.edgeLabel)) != incomingLabels[currNode].end())
+		{
+			newCSP.domain[currEdge.v].push_back(currEdge.u);
+		}
+	}
+	return newCSP;           
+}
 void gSpanInit()
 {
 	Subgraphs newSubgraph;
-	for(int i = 0;i < numberOfDistinctEdges;i++)
+	leastEdgeRemaining = 0;
+	CSP csp;
+	for(;leastEdgeRemaining < numberOfDistinctEdges;leastEdgeRemaining++)
 	{
 		clearSubgraph(newSubgraph);		
-		initializeSingleEdgeGraph(distinctEdges[i], newSubgraph);
-		subgraphExtension(newSubgraph);
+		initializeSingleEdgeGraph(distinctEdges[leastEdgeRemaining], newSubgraph);
+		subgraphExtension(newSubgraph,csp);
 		printf("Done with this edge\n");
 	}
 }
