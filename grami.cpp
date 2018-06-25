@@ -306,31 +306,52 @@ void printSubgraph(Subgraphs currSubgraph)
 	else printf("Stack top : %d\n",currSubgraph.rightmostPath.top());
 }
 int globalVariable = 0;
-char terminator[5];
-void subgraphExtension(Subgraphs currSubgraph){
-	printSubgraph(currSubgraph);
+
+inline bool userWantsToTerminate(){
+	char terminator[5];
 	printf("Do you want to terminate?\n");
 	cin>>terminator;
-	if(terminator[0] == 'y')
+	return (terminator[0] == 'y');
+}
+
+inline bool randomTermination(){
+	return (rand()%100)<80;
+}
+
+void subgraphExtension(Subgraphs currSubgraph){
+	globalVariable++;
+	if((globalVariable%10)==0) printf("%d\n", globalVariable);
+	//printSubgraph(currSubgraph);
+		
+	/*if(userWantsToTerminate())
 	{
 		printf("Terminated\n");
 		return;
+	}*/
+	
+	if(randomTermination()){
+		return;
 	}
+	
+	
 	Subgraphs newSubgraph;
 	int currNode;
 	int low, sz;
+	
 	while(!currSubgraph.rightmostPath.empty()){
 		currNode=currSubgraph.rightmostPath.top();
 		sz=currSubgraph.adjNode[currNode].size();
 		low=(sz==0) ? 0 : currSubgraph.adjNode[currNode][sz-1]+1;
 		for(int i=low; i<currNode; i++){
 			for(int j=0; j<numberOfEdgeLabels; j++){
+				if(labelRelations.find(ppi(pii(currSubgraph.nodeLabels[currNode], currSubgraph.nodeLabels[i]), j))==labelRelations.end()) continue;
 				newSubgraph=extendBackwardEdge(currSubgraph, currNode, i, j);
 				subgraphExtension(newSubgraph);
 			}
 		}
 		for(int i=0; i<numberOfNodeLabels; i++){
 			for(int j=0; j<numberOfEdgeLabels; j++){
+				if(labelRelations.find(ppi(pii(currSubgraph.nodeLabels[currNode], i), j))==labelRelations.end()) continue;
 				newSubgraph=extendForwardEdge(currSubgraph, currNode, currSubgraph.numberOfNodes, i, j);
 				subgraphExtension(newSubgraph);
 			}
@@ -338,32 +359,42 @@ void subgraphExtension(Subgraphs currSubgraph){
 		currSubgraph.rightmostPath.pop();
 	}
 }
+
+void clearSubgraph(Subgraphs &sub){
+	sub.adjNode.clear();
+	sub.adjLabel.clear();
+	sub.nodeLabels.clear();
+	while(!sub.rightmostPath.empty()) sub.rightmostPath.pop();
+}
+
+void initializeSingleEdgeGraph(GraphEdge e, Subgraphs &sub){
+	sub.numberOfNodes = 2;
+	sub.numberOfEdges = 1;
+	sub.adjNode.resize(2);
+	sub.adjLabel.resize(2);
+	sub.adjNode[0].push_back(1);
+	sub.adjLabel[0].push_back(e.edgeLabel);
+	sub.rightmostPath.push(0);
+	sub.rightmostPath.push(1);
+	sub.nodeLabels.push_back(nodeLabels[e.u]);
+	sub.nodeLabels.push_back(nodeLabels[e.v]);
+}
+
 void gSpanInit()
 {
 	Subgraphs newSubgraph;
 	for(int i = 0;i < numberOfDistinctEdges;i++)
 	{
-		newSubgraph.adjNode.clear();
-		newSubgraph.adjLabel.clear();
-		newSubgraph.nodeLabels.clear();
-		while(!newSubgraph.rightmostPath.empty())newSubgraph.rightmostPath.pop();
-		newSubgraph.numberOfNodes = 2;
-		newSubgraph.numberOfEdges = 1;
-		newSubgraph.adjNode.resize(2);
-		newSubgraph.adjLabel.resize(2);
-		newSubgraph.adjNode[0].push_back(1);
-		newSubgraph.adjLabel[0].push_back(distinctEdges[i].edgeLabel);
-		newSubgraph.rightmostPath.push(0);
-		newSubgraph.rightmostPath.push(1);
-		newSubgraph.nodeLabels.push_back(nodeLabels[distinctEdges[i].u]);
-		newSubgraph.nodeLabels.push_back(nodeLabels[distinctEdges[i].v]);
+		clearSubgraph(newSubgraph);		
+		initializeSingleEdgeGraph(distinctEdges[i], newSubgraph);
 		subgraphExtension(newSubgraph);
 		printf("Done with this edge\n");
-		
 	}
 }
 int main()
 {
+	freopen("in.txt", "r", stdin);
+	srand(time(NULL));
 	takeInput();
 	findLabelRelations();
 	printLabelRelations();
