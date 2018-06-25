@@ -234,7 +234,7 @@ inline void findDistinctEdges(){ //Assumes edges in EdgeList are sorted in canon
 	}
 }
 
-inline void printDistinctEdges(){ //Assumes edges in EdgeList are sorted in canonical order
+inline void printDistinctEdges(){
 	puts("");
 	for(int i=0; i<numberOfDistinctEdges; i++){
 		printf("%d %d %d\n", nodeLabels[distinctEdges[i].u], nodeLabels[distinctEdges[i].v], distinctEdges[i].edgeLabel); 
