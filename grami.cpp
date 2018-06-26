@@ -42,6 +42,8 @@ struct EdgeLabels{
 struct Subgraphs{
 	int numberOfNodes;
 	int numberOfEdges;
+	vector <vector <int> > incomingAdjNode;
+	vector <vector <int> > incomingAdjLabel;
     vector < vector <int> > adjNode;
     vector < vector <int> > adjLabel;
     vector <int> nodeLabels;
@@ -54,6 +56,13 @@ struct CSP{
 	unsigned int mnSize;
 	vector< vector<int>> domain;
 };
+
+struct CspVariables{
+	int domainSize;
+	int numberOfAdjEdges;
+	int discoveryTime;
+};
+
 /**************** GLOBAL VARIABLES *********************************/
 
 int numberOfNodes,numberOfEdges,numberOfNodeLabels,numberOfEdgeLabels, numberOfDistinctEdges;
@@ -276,6 +285,8 @@ Subgraphs extendBackwardEdge(Subgraphs currSubgraph, int u, int v, int edgeLabel
 	newSubgraph.numberOfEdges++;
 	newSubgraph.adjNode[u].push_back(v);
 	newSubgraph.adjLabel[u].push_back(edgeLabel);
+	newSubgraph.incomingAdjNode[v].push_back(u);
+	newSubgraph.incomingAdjLabel[v].push_back(edgeLabel);
 	return newSubgraph;
 }
 
@@ -372,6 +383,13 @@ Subgraphs extendForwardEdge(Subgraphs currSubgraph, int u, int v, int vLabel, in
 	newSubgraph.adjLabel[u].push_back(edgeLabel);
 	newSubgraph.adjNode.push_back(newVec);
 	newSubgraph.adjLabel.push_back(newVec);
+	
+	
+	newSubgraph.incomingAdjNode.push_back(newVec);
+	newSubgraph.incomingAdjLabel.push_back(newVec);
+	newSubgraph.incomingAdjNode[v].push_back(u);
+	newSubgraph.incomingAdjLabel[v].push_back(edgeLabel);
+	
 	newSubgraph.nodeLabels.push_back(vLabel);
 	newSubgraph.rightmostPath.push(v);
 	return newSubgraph;
@@ -427,16 +445,81 @@ inline bool randomTermination(){
 	return (rand()%100)<80;
 }
 
+bool inAdjEdges(Subgraphs sub, int u, int v, int elabel){
+	for(int i=0; i<(int)sub.adjNode[u].size(); i++){
+		if(sub.adjNode[u][i]==v && sub.adjLabel[u][i]==elabel) return true;
+	}
+	return false;
+}
+
+bool inInEdges(Subgraphs sub, int u, int v, int elabel){
+	for(int i=0; i<(int)sub.incomingAdjNode[u].size(); i++){
+		if(sub.incomingAdjNode[u][i]==v && sub.incomingAdjLabel[u][i]==elabel) return true;
+	}
+	return false;
+}
+
+bool incomingEdgesConsistent(Subgraphs sub){
+	for(int i=0; i<sub.numberOfNodes; i++){
+		for(int j=0; j<(int)sub.incomingAdjNode[i].size(); j++){
+			if(!inAdjEdges(sub, sub.incomingAdjNode[i][j], i, sub.incomingAdjLabel[i][j])){
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
+bool edgesConsistent(Subgraphs sub){
+	for(int i=0; i<sub.numberOfNodes; i++){
+		for(int j=0; j<(int)sub.adjNode[i].size(); j++){
+			if(!inInEdges(sub, sub.adjNode[i][j], i, sub.adjLabel[i][j])){
+				return false;
+			}
+		}
+	}
+	return true;
+}
+CspVariables cspVar[NODES];
+bool cmpCspVar(CspVariables a, CspVariables b)
+{
+	return (a.domainSize < b.domainSize)||(a.domainSize == b.domainSize && a.numberOfAdjEdges > b.numberOfAdjEdges);
+	
+}
+void printCSPVariables(Subgraphs sub)
+{
+	printf("\nPrinting CSP Variables :\n");
+	for(int i = 0; i < sub.numberOfNodes;i++)
+	{
+		printf("%d %d %d\n",cspVar[i].discoveryTime,cspVar[i].domainSize,cspVar[i].numberOfAdjEdges);
+	}
+}
+bool isFrequent(Subgraphs sub, CSP csp)
+{
+	for(int i = 0;i < sub.numberOfNodes;i++)
+	{
+		cspVar[i].discoveryTime = i;
+		cspVar[i].domainSize = csp.domain[i].size();
+		cspVar[i].numberOfAdjEdges = sub.adjNode[i].size() + sub.incomingAdjNode[i].size();
+	}
+	sort(cspVar,cspVar+sub.numberOfNodes,cmpCspVar);
+	printCSPVariables(sub);
+	return true;
+}
 void subgraphExtension(Subgraphs currSubgraph, CSP csp){
 	globalVariable++;
 	if((globalVariable%10)==0) printf("%d\n", globalVariable);
-	//printSubgraph(currSubgraph);
-	//printCSP(csp);	
-	/*if(userWantsToTerminate())
+	//assert(incomingEdgesConsistent(currSubgraph) && edgesConsistent(currSubgraph));
+	printSubgraph(currSubgraph);
+	printCSP(csp);	
+	if(isFrequent(currSubgraph,csp)){
+			printf("Finished checking frequency\n");
+	}
+	if(userWantsToTerminate())
 	{
 		printf("Terminated\n");
 		return;
-	}*/
+	}
 	
 	/*if(randomTermination()){
 		return;
@@ -477,6 +560,8 @@ void subgraphExtension(Subgraphs currSubgraph, CSP csp){
 }
 
 void clearSubgraph(Subgraphs &sub){
+	sub.incomingAdjNode.clear();
+	sub.incomingAdjLabel.clear();
 	sub.adjNode.clear();
 	sub.adjLabel.clear();
 	sub.nodeLabels.clear();
@@ -486,6 +571,10 @@ void clearSubgraph(Subgraphs &sub){
 void initializeSingleEdgeGraph(GraphEdge e, Subgraphs &sub){
 	sub.numberOfNodes = 2;
 	sub.numberOfEdges = 1;
+	sub.incomingAdjNode.resize(2);
+	sub.incomingAdjLabel.resize(2);
+	sub.incomingAdjNode[1].push_back(0);
+	sub.incomingAdjLabel[1].push_back(e.edgeLabel);
 	sub.adjNode.resize(2);
 	sub.adjLabel.resize(2);
 	sub.adjNode[0].push_back(1);
@@ -563,23 +652,27 @@ void printIncomingLabels()
 		}
 	}
 }
+
+
+
+
 int main()
 {
 	//freopen("bigin.txt", "r", stdin);
 	srand(time(NULL));
 	takeInput();
-	printNodesWithLabel();
+	//printNodesWithLabel();
 	findLabelRelations();
-	printLabelRelations();
+	//printLabelRelations();
 	sortNodeLabels();
-	printSorted();
+	//printSorted();
 	sortEdgeLabels();
-	printEdgeSorted();
+	//printEdgeSorted();
 	processEdgeList();
-	printEdgeList();
+	//printEdgeList();
 	findDistinctEdges();
-	printDistinctEdges();
-	printIncomingLabels();
+	//printDistinctEdges();
+	//printIncomingLabels();
 	gSpanInit();
 	return 0;
 }
