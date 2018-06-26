@@ -30,9 +30,8 @@ struct NodeLabels{
         int label;
         int count; //Number of nodes with corresponding label 
 		int indexInSortedList;
-		vector <int> nodesWithLabel;
 }nodeLabelList[NODELABELS], sortedNodeLabels[NODELABELS];
-
+vector <int> nodesWithLabel[NODELABELS];
 struct EdgeLabels{
         int label;
         int count; //Number of edges with corresponding label 
@@ -52,6 +51,7 @@ struct Subgraphs{
 map < ppi , double > labelRelations;
 
 struct CSP{
+	unsigned int mnSize;
 	vector< vector<int>> domain;
 };
 /**************** GLOBAL VARIABLES *********************************/
@@ -183,7 +183,7 @@ void takeInput()
 		assert(label<NODELABELS && label>= 0);
 		nodeLabelList[label].count++;
 		nodeLabels[i]=label;
-		nodeLabelList[label].nodesWithLabel.push_back(i);
+		nodesWithLabel[label].push_back(i);
 	}
 	
 	for(int i = 0;i < numberOfEdgeLabels;i++)
@@ -195,8 +195,8 @@ void takeInput()
 	{
 		scanf("%d %d %lf %d",&edgeList[i].u,&edgeList[i].v,&edgeList[i].w,&edgeList[i].edgeLabel);
 		edgeLabelList[edgeList[i].edgeLabel].count++;
-		outgoingLabels[edgeList[i].u].insert(pii(edgeList[i].v,edgeList[i].edgeLabel));
-		incomingLabels[edgeList[i].v].insert(pii(edgeList[i].u,edgeList[i].edgeLabel));
+		outgoingLabels[edgeList[i].u].insert(pii(nodeLabels[edgeList[i].v],edgeList[i].edgeLabel));
+		incomingLabels[edgeList[i].v].insert(pii(nodeLabels[edgeList[i].u],edgeList[i].edgeLabel));
 	}
 	scanf("%lf",&threshold);
 }
@@ -279,6 +279,23 @@ Subgraphs extendBackwardEdge(Subgraphs currSubgraph, int u, int v, int edgeLabel
 	return newSubgraph;
 }
 
+CSP domainAfterForwardExtension(int uLabel, int vLabel, int edgeLabel, CSP csp){
+	CSP newCsp=csp;
+	vector <int> domainOfExtendedNode;
+	int nodeInConsideration;
+	int sz=nodesWithLabel[vLabel].size();
+	for(int i=0; i<sz; i++){
+		nodeInConsideration=nodesWithLabel[vLabel][i];
+		if(incomingLabels[nodeInConsideration].find(pii(uLabel, edgeLabel))!=incomingLabels[nodeInConsideration].end()){
+			domainOfExtendedNode.push_back(nodeInConsideration);
+		}
+	}
+	newCsp.domain.push_back(domainOfExtendedNode);
+	newCsp.mnSize=min(newCsp.mnSize,(unsigned int) domainOfExtendedNode.size());
+	domainOfExtendedNode.clear();
+	return newCsp;
+}
+
 Subgraphs extendForwardEdge(Subgraphs currSubgraph, int u, int v, int vLabel, int edgeLabel){
 	assert(v>u);
 	Subgraphs newSubgraph;
@@ -295,10 +312,27 @@ Subgraphs extendForwardEdge(Subgraphs currSubgraph, int u, int v, int vLabel, in
 	return newSubgraph;
 }
 
+void printCSP(CSP csp){
+	printf("CSP:\n");
+	printf("Min Size=%d\n", csp.mnSize);
+	for(int i=0; i<(int)csp.domain.size(); i++){
+		printf("%d: ", i); 
+		for(int j=0; j<(int)csp.domain[i].size(); j++){
+			printf("%d ", csp.domain[i][j]);
+		}
+		puts("");
+	}
+	puts("");
+	puts("");
+	puts("");
+}
+
 void printSubgraph(Subgraphs currSubgraph)
 {
+	printf("Subgraph:\n");
 	//getchar();
-	printf("\n%d %d\n",currSubgraph.numberOfNodes, currSubgraph.numberOfEdges);
+	printf("\nNodes in subgraph: %d\n Edges in Subgraph: %d\n",currSubgraph.numberOfNodes, currSubgraph.numberOfEdges);
+	printf("\nThe edges in the subgraph are\n"); 
 	for(int i = 0;i < currSubgraph.numberOfNodes;i++)
 	{
 		for(unsigned int j = 0;j < currSubgraph.adjNode[i].size();j++)
@@ -306,11 +340,12 @@ void printSubgraph(Subgraphs currSubgraph)
 			printf("%d %d %d\n",i,currSubgraph.adjNode[i][j],currSubgraph.adjLabel[i][j]);
 		}
 	}
-	printf("Labels : \n");
+	printf("Labels of the nodes: ");
 	for(unsigned int i = 0;i< currSubgraph.nodeLabels.size();i++)
 	{
-		printf("%d\n",currSubgraph.nodeLabels[i]);
+		printf("%d ",currSubgraph.nodeLabels[i]);
 	}
+	puts("");
 	if(currSubgraph.rightmostPath.empty())printf("Empty\n");
 	else printf("Stack top : %d\n",currSubgraph.rightmostPath.top());
 }
@@ -330,15 +365,20 @@ inline bool randomTermination(){
 void subgraphExtension(Subgraphs currSubgraph, CSP csp){
 	globalVariable++;
 	if((globalVariable%10)==0) printf("%d\n", globalVariable);
-	//printSubgraph(currSubgraph);
-		
-	/*if(userWantsToTerminate())
+	printSubgraph(currSubgraph);
+	printCSP(csp);	
+	if(userWantsToTerminate())
 	{
 		printf("Terminated\n");
 		return;
+	}
+	
+	/*if(randomTermination()){
+		return;
 	}*/
 	
-	if(randomTermination()){
+	if(csp.mnSize<threshold){
+		printf("Terminating anyways\n");
 		return;
 	}
 	
@@ -346,7 +386,7 @@ void subgraphExtension(Subgraphs currSubgraph, CSP csp){
 	Subgraphs newSubgraph;
 	int currNode;
 	int low, sz;
-	
+	CSP newCsp;
 	while(!currSubgraph.rightmostPath.empty()){
 		currNode=currSubgraph.rightmostPath.top();
 		sz=currSubgraph.adjNode[currNode].size();
@@ -362,7 +402,8 @@ void subgraphExtension(Subgraphs currSubgraph, CSP csp){
 			for(int j=0; j<numberOfEdgeLabels; j++){
 				if(labelRelations.find(ppi(pii(currSubgraph.nodeLabels[currNode], i), j))==labelRelations.end()) continue;
 				newSubgraph=extendForwardEdge(currSubgraph, currNode, currSubgraph.numberOfNodes, i, j);
-				subgraphExtension(newSubgraph,csp);
+				newCsp=domainAfterForwardExtension(currSubgraph.nodeLabels[currNode], i, j, csp);
+				subgraphExtension(newSubgraph,newCsp);
 			}
 		}
 		currSubgraph.rightmostPath.pop();
@@ -391,28 +432,30 @@ void initializeSingleEdgeGraph(GraphEdge e, Subgraphs &sub){
 CSP findDomain(int edgeIndex)
 {
 	CSP newCSP;
+	newCSP.domain.resize(2);
 	GraphEdge currEdge = edgeList[edgeIndex];
-	vector <int> nodesWithLabelU = nodeLabelList[nodeLabels[currEdge.u]].nodesWithLabel;
-	vector <int> nodesWithLabelV = nodeLabelList[nodeLabels[currEdge.v]].nodesWithLabel;
-	int sz = nodesWithLabelU.size();
+	int labelu=nodeLabels[currEdge.u];
+	int labelv=nodeLabels[currEdge.v];
+	int sz = nodesWithLabel[labelu].size();
 	int currNode;
 	for(int i = 0;i < sz; i++)
 	{
-		currNode = nodesWithLabelU[i];
-		if(outgoingLabels[currNode].find(pii(currEdge.v,currEdge.edgeLabel)) != outgoingLabels[currNode].end())
+		currNode = nodesWithLabel[labelu][i];
+		if(outgoingLabels[currNode].find(pii(nodeLabels[currEdge.v],currEdge.edgeLabel)) != outgoingLabels[currNode].end())
 		{
-			newCSP.domain[currEdge.u].push_back(currEdge.v);
+			newCSP.domain[0].push_back(currNode);
 		}
 	}
-	sz = nodesWithLabelV.size();
+	sz = nodesWithLabel[labelv].size();
 	for(int i = 0;i < sz; i++)
 	{
-		currNode = nodesWithLabelV[i];
-		if(incomingLabels[currNode].find(pii(currEdge.u,currEdge.edgeLabel)) != incomingLabels[currNode].end())
+		currNode = nodesWithLabel[labelv][i];
+		if(incomingLabels[currNode].find(pii(nodeLabels[currEdge.u],currEdge.edgeLabel)) != incomingLabels[currNode].end())
 		{
-			newCSP.domain[currEdge.v].push_back(currEdge.u);
+			newCSP.domain[1].push_back(currNode);
 		}
 	}
+	newCSP.mnSize=min(newCSP.domain[1].size(), newCSP.domain[0].size());
 	return newCSP;           
 }
 void gSpanInit()
@@ -424,15 +467,42 @@ void gSpanInit()
 	{
 		clearSubgraph(newSubgraph);		
 		initializeSingleEdgeGraph(distinctEdges[leastEdgeRemaining], newSubgraph);
+		csp=findDomain(leastEdgeRemaining);
 		subgraphExtension(newSubgraph,csp);
 		printf("Done with this edge\n");
 	}
 }
+void printNodesWithLabel()
+{
+	printf("Nodes with Label:\n");
+	for(int i = 0;i<numberOfNodeLabels;i++)
+	{
+		printf("Node Label : %d \n",i);
+		for(int j = 0;j < (int) nodesWithLabel[i].size();j++)
+		{
+			printf("%d ",nodesWithLabel[i][j]);
+		}
+		printf("\n");
+	}
+}
+void printIncomingLabels()
+{
+	printf("Incoming Labels\n");
+	for(int i = 0;i<numberOfNodes;i++)
+	{
+		set <pii> :: iterator it;
+		for( it = incomingLabels[i].begin();it!= incomingLabels[i].end();it++)
+		{
+			printf("%d -> %d : %d\n",i,it->first,it->second);
+		}
+	}
+}
 int main()
 {
-	freopen("in.txt", "r", stdin);
+	//freopen("bigin.txt", "r", stdin);
 	srand(time(NULL));
 	takeInput();
+	printNodesWithLabel();
 	findLabelRelations();
 	printLabelRelations();
 	sortNodeLabels();
@@ -443,6 +513,7 @@ int main()
 	printEdgeList();
 	findDistinctEdges();
 	printDistinctEdges();
+	printIncomingLabels();
 	gSpanInit();
 	return 0;
 }
