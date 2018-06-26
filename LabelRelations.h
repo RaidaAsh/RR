@@ -17,3 +17,29 @@ inline void printLabelRelations(){
 		cout<<temp.first.first<<" "<<temp.first.second<<" "<<temp.second<<" "<<(it->second)<<endl; 
 	}
 }
+
+void printNodesWithLabel()
+{
+	printf("Nodes with Label:\n");
+	for(int i = 0;i<numberOfNodeLabels;i++)
+	{
+		printf("Node Label : %d \n",i);
+		for(int j = 0;j < (int) nodesWithLabel[i].size();j++)
+		{
+			printf("%d ",nodesWithLabel[i][j]);
+		}
+		printf("\n");
+	}
+}
+void printIncomingLabels()
+{
+	printf("Incoming Labels\n");
+	for(int i = 0;i<numberOfNodes;i++)
+	{
+		set <pii> :: iterator it;
+		for( it = incomingLabels[i].begin();it!= incomingLabels[i].end();it++)
+		{
+			printf("%d -> %d : %d\n",i,it->first,it->second);
+		}
+	}
+}
