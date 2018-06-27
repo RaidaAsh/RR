@@ -21,7 +21,7 @@ For i = 0 to number of egdes -1:
 	Weight(w)
 	Edge Label(edgeLabel)
 	
-Threshhold
+Threshold
 * 
 * 
 */
@@ -59,6 +59,8 @@ void takeInput()
 		edgeLabelList[edgeList[i].edgeLabel].count++;
 		outgoingLabels[edgeList[i].u].insert(pii(nodeLabels[edgeList[i].v],edgeList[i].edgeLabel));
 		incomingLabels[edgeList[i].v].insert(pii(nodeLabels[edgeList[i].u],edgeList[i].edgeLabel));
+		outgoingNodes[edgeList[i].u].insert(pii(edgeList[i].v, edgeList[i].edgeLabel));
+		incomingNodes[edgeList[i].v].insert(pii(edgeList[i].u, edgeList[i].edgeLabel));
 	}
 	scanf("%lf",&threshold);
 }

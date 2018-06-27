@@ -1,11 +1,7 @@
 #include "gspan.h"
 /**********************************************************************/
 
-
-
-
-int main()
-{
+int main(){
 	//freopen("bigin.txt", "r", stdin);
 	srand(time(NULL));
 	takeInput();

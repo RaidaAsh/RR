@@ -52,3 +52,9 @@ struct CspVariables{
 	int numberOfAdjEdges;
 	int discoveryTime;
 };
+
+
+struct CSPValues{
+	int value;
+	int constrainingDegree;
+};

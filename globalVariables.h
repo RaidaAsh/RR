@@ -8,6 +8,6 @@ int startIterator[NODES];
 double threshold;
 int leastEdgeRemaining = 0;
 vector <Subgraphs> freqSubgraphs;
-set <pii> outgoingLabels[NODES],incomingLabels[NODES];
+set <pii> outgoingLabels[NODES],incomingLabels[NODES], outgoingNodes[NODES], incomingNodes[NODES];
 map < ppi , double > labelRelations;
 int freq[NODES + EDGES],taken[NODES + EDGES];
