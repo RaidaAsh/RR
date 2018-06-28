@@ -74,3 +74,12 @@ bool edgesConsistent(Subgraphs sub){
 	return true;
 }
 
+bool domainConsistent(CSP csp){
+	for(int i=0; i<(int)csp.domain.size(); i++){
+		for(int j=0; j<(int)csp.domain[i].size(); j++){
+			if(csp.domain[i][j]<0 || csp.domain[i][j]>=numberOfNodes) return false;
+		}
+	}
+	return true;
+}
+

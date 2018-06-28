@@ -43,3 +43,27 @@ void printIncomingLabels()
 		}
 	}
 }
+
+void printIncomingNodes(){
+	printf("Incoming Nodes\n");
+	for(int i = 0;i<numberOfNodes;i++)
+	{
+		set <pii> :: iterator it;
+		for( it = incomingNodes[i].begin();it!= incomingNodes[i].end();it++)
+		{
+			printf("%d -> %d : %d\n",i,it->first,it->second);
+		}
+	}
+}
+
+void printOutgoingNodes(){
+	printf("Outgoing Nodes\n");
+	for(int i = 0;i<numberOfNodes;i++)
+	{
+		set <pii> :: iterator it;
+		for( it = outgoingNodes[i].begin();it!= outgoingNodes[i].end();it++)
+		{
+			printf("%d -> %d : %d\n",i,it->first,it->second);
+		}
+	}
+}

@@ -16,28 +16,34 @@ inline bool randomTermination(){
 
 
 void subgraphExtension(Subgraphs currSubgraph, CSP csp){
-	globalVariable++;
-	if((globalVariable%10)==0) printf("%d\n", globalVariable);
-	//assert(incomingEdgesConsistent(currSubgraph) && edgesConsistent(currSubgraph));
+	//globalVariable++;
+	//if((globalVariable%10)==0) printf("%d\n", globalVariable);
+	/*if(currSubgraph.numberOfEdges==1)*/ assert(incomingEdgesConsistent(currSubgraph) && edgesConsistent(currSubgraph) && domainConsistent(csp));
+	//else assert(incomingEdgesConsistent(currSubgraph) && edgesConsistent(currSubgraph));
 	printSubgraph(currSubgraph);
-	printCSP(csp);	
-	if(isFrequent(currSubgraph,csp)){
-			printf("Finished checking frequency\n");
-	}
-	if(userWantsToTerminate())
+	printCSP(csp);
+	/*if(userWantsToTerminate())
 	{
 		printf("Terminated\n");
 		return;
+	}*/
+	if(!isFrequent(currSubgraph,csp)){
+		printf("Infrequent\n");
+		return;
 	}
-	
+	else{
+		printf("Frequent : %d\n",currSubgraph.numberOfNodes);
+		freqSubgraphs.push_back(currSubgraph);
+	}
+	char ch = getchar();
+	ch = getchar();
+	if(ch){}
+	else{}
 	/*if(randomTermination()){
 		return;
 	}*/
 	
-	if(csp.mnSize<threshold){
-		//printf("Terminating anyways\n");
-		return;
-	}
+	
 	
 	
 	Subgraphs newSubgraph;
