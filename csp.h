@@ -242,6 +242,7 @@ bool isFrequent(Subgraphs sub, CSP csp)
 			printf("Considering assignment of %d to %d\n", searchCSP.domain[nxt][i], nxt);
 			if(markNodes[searchCSP.domain[nxt][i]])
 			{
+				assert(false);
 				printf("Breaking\n");
 				break;
 			}
@@ -256,7 +257,7 @@ bool isFrequent(Subgraphs sub, CSP csp)
 			//puts("Arc consistency enforced\n");
 			if(search(1)) count++;
 			restoreDomains(nxt);
-			markNodes[searchCSP.domain[nxt][i]] = false;
+			markNodes[sol[nxt]] = false;
 			//printf("Domains restored\n");
 			isAssigned[nxt]=false;
 			assert(domainSizeConsistent(searchSubgraph));
