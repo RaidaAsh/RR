@@ -35,6 +35,10 @@ void subgraphExtension(Subgraphs currSubgraph, CSP csp){
 		printf("Frequent : %d\n",currSubgraph.numberOfNodes);
 		freqSubgraphs.push_back(currSubgraph);
 	}
+	//char ch = getchar();
+	//ch = getchar();
+	//if(ch){}
+	//else{}
 	/*if(randomTermination()){
 		return;
 	}*/
@@ -106,6 +110,8 @@ void gSpanInit()
 		clearSubgraph(newSubgraph);		
 		initializeSingleEdgeGraph(distinctEdges[leastEdgeRemaining], newSubgraph);
 		csp=findDomain(leastEdgeRemaining);
+		printf("New Edge: %d %d %d\n", distinctEdges[leastEdgeRemaining].u, distinctEdges[leastEdgeRemaining].v, distinctEdges[leastEdgeRemaining].edgeLabel); 
+		printCSP(csp);
 		subgraphExtension(newSubgraph,csp);
 		printf("Done with this edge\n");
 	}

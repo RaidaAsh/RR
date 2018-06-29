@@ -1,3 +1,30 @@
+Finding domain:
+For domain of 0
+Considering node 0
+pushing 0 in domain
+Considering node 2
+Considering node 5
+Considering node 6
+Considering node 7
+pushing 7 in domain
+Considering node 11
+For domain of 0
+Considering node 0
+Considering node 2
+pushing 2 in domain
+Considering node 5
+Considering node 6
+pushing 6 in domain
+Considering node 7
+Considering node 11
+New Edge: 0 2 0
+CSP:
+Min Size=2
+0: 0 7 
+1: 2 6 
+
+
+
 Subgraph:
 
 Nodes in subgraph: 2
@@ -622,6 +649,39 @@ Count of 0: 0
 
 Infrequent
 Done with this edge
+Finding domain:
+For domain of 0
+Considering node 0
+pushing 0 in domain
+Considering node 2
+pushing 2 in domain
+Considering node 5
+pushing 5 in domain
+Considering node 6
+pushing 6 in domain
+Considering node 7
+pushing 7 in domain
+Considering node 11
+For domain of 1
+Considering node 1
+pushing 1 in domain
+Considering node 3
+pushing 3 in domain
+Considering node 4
+pushing 4 in domain
+Considering node 8
+pushing 8 in domain
+Considering node 9
+pushing 9 in domain
+Considering node 10
+New Edge: 2 3 0
+CSP:
+Min Size=5
+0: 0 2 5 6 7 
+1: 1 3 4 8 9 
+
+
+
 Subgraph:
 
 Nodes in subgraph: 2
@@ -877,6 +937,31 @@ Count of 0: 0
 
 Infrequent
 Done with this edge
+Finding domain:
+For domain of 0
+Considering node 0
+Considering node 2
+Considering node 5
+Considering node 6
+Considering node 7
+Considering node 11
+pushing 11 in domain
+For domain of 1
+Considering node 1
+Considering node 3
+Considering node 4
+Considering node 8
+Considering node 9
+Considering node 10
+pushing 10 in domain
+New Edge: 11 10 1
+CSP:
+Min Size=1
+0: 11 
+1: 10 
+
+
+
 Subgraph:
 
 Nodes in subgraph: 2
@@ -901,6 +986,35 @@ Count of 0: 1
 
 Infrequent
 Done with this edge
+Finding domain:
+For domain of 1
+Considering node 1
+Considering node 3
+pushing 3 in domain
+Considering node 4
+pushing 4 in domain
+Considering node 8
+Considering node 9
+pushing 9 in domain
+Considering node 10
+For domain of 0
+Considering node 0
+Considering node 2
+pushing 2 in domain
+Considering node 5
+pushing 5 in domain
+Considering node 6
+Considering node 7
+pushing 7 in domain
+Considering node 11
+New Edge: 9 2 0
+CSP:
+Min Size=3
+0: 3 4 9 
+1: 2 5 7 
+
+
+
 Subgraph:
 
 Nodes in subgraph: 2
@@ -931,6 +1045,35 @@ Count of 0: 1
 
 Infrequent
 Done with this edge
+Finding domain:
+For domain of 1
+Considering node 1
+pushing 1 in domain
+Considering node 3
+Considering node 4
+Considering node 8
+pushing 8 in domain
+Considering node 9
+pushing 9 in domain
+Considering node 10
+For domain of 0
+Considering node 0
+Considering node 2
+pushing 2 in domain
+Considering node 5
+Considering node 6
+Considering node 7
+pushing 7 in domain
+Considering node 11
+pushing 11 in domain
+New Edge: 1 2 1
+CSP:
+Min Size=3
+0: 1 8 9 
+1: 2 7 11 
+
+
+
 Subgraph:
 
 Nodes in subgraph: 2
@@ -953,6 +1096,33 @@ Count of 0: 0
 
 Infrequent
 Done with this edge
+Finding domain:
+For domain of 1
+Considering node 1
+pushing 1 in domain
+Considering node 3
+pushing 3 in domain
+Considering node 4
+Considering node 8
+Considering node 9
+Considering node 10
+For domain of 1
+Considering node 1
+Considering node 3
+Considering node 4
+pushing 4 in domain
+Considering node 8
+Considering node 9
+pushing 9 in domain
+Considering node 10
+New Edge: 1 9 0
+CSP:
+Min Size=2
+0: 1 3 
+1: 4 9 
+
+
+
 Subgraph:
 
 Nodes in subgraph: 2
@@ -975,6 +1145,31 @@ Count of 0: 0
 
 Infrequent
 Done with this edge
+Finding domain:
+For domain of 1
+Considering node 1
+Considering node 3
+Considering node 4
+Considering node 8
+Considering node 9
+Considering node 10
+pushing 10 in domain
+For domain of 1
+Considering node 1
+Considering node 3
+Considering node 4
+Considering node 8
+Considering node 9
+pushing 9 in domain
+Considering node 10
+New Edge: 10 9 1
+CSP:
+Min Size=1
+0: 10 
+1: 9 
+
+
+
 Subgraph:
 
 Nodes in subgraph: 2

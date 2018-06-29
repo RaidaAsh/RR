@@ -2,27 +2,34 @@
 
 CSP findDomain(int edgeIndex)
 {
+	printf("Finding domain:\n");
 	CSP newCSP;
 	newCSP.domain.resize(2);
-	GraphEdge currEdge=distinctEdges[edgeIndex];
+	GraphEdge currEdge = distinctEdges[edgeIndex];
 	int labelu=nodeLabels[currEdge.u];
 	int labelv=nodeLabels[currEdge.v];
 	int sz = nodesWithLabel[labelu].size();
 	int currNode;
+	printf("For domain of %d\n", labelu);
 	for(int i = 0;i < sz; i++)
 	{
 		currNode = nodesWithLabel[labelu][i];
+		printf("Considering node %d\n", currNode);
 		if(outgoingLabels[currNode].find(pii(nodeLabels[currEdge.v],currEdge.edgeLabel)) != outgoingLabels[currNode].end())
 		{
+			printf("pushing %d in domain\n", currNode);
 			newCSP.domain[0].push_back(currNode);
 		}
 	}
 	sz = nodesWithLabel[labelv].size();
+	printf("For domain of %d\n", labelv);
 	for(int i = 0;i < sz; i++)
 	{
 		currNode = nodesWithLabel[labelv][i];
+		printf("Considering node %d\n", currNode);
 		if(incomingLabels[currNode].find(pii(nodeLabels[currEdge.u],currEdge.edgeLabel)) != incomingLabels[currNode].end())
 		{
+			printf("pushing %d in domain\n", currNode);
 			newCSP.domain[1].push_back(currNode);
 		}
 	}
