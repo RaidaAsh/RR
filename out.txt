@@ -1,0 +1,1030 @@
+Subgraph:
+
+Nodes in subgraph: 2
+ Edges in Subgraph: 1
+
+The edges in the subgraph are
+0 1 0
+Labels of the nodes: 0 0 
+Stack top : 1
+CSP:
+Min Size=2
+0: 0 7 
+1: 2 6 
+
+
+
+Considering assignment of 0 to 0
+Assigning it
+Assigning 0 to 0
+Assigning 2 to 1
+Considering assignment of 7 to 0
+Assigning it
+Assigning 7 to 0
+Assigning 2 to 1
+Count of 0: 2
+
+Considering assignment of 2 to 1
+Assigning it
+Assigning 2 to 1
+Assigning 0 to 0
+Considering assignment of 6 to 1
+Assigning it
+Assigning 6 to 1
+Assigning 7 to 0
+Count of 1: 2
+
+Frequent : 2
+Subgraph:
+
+Nodes in subgraph: 2
+ Edges in Subgraph: 2
+
+The edges in the subgraph are
+0 1 0
+1 0 0
+Labels of the nodes: 0 0 
+Stack top : 1
+CSP:
+Min Size=0
+0: 
+1: 
+
+
+
+Count of 0: 0
+
+Infrequent
+Subgraph:
+
+Nodes in subgraph: 3
+ Edges in Subgraph: 2
+
+The edges in the subgraph are
+0 1 0
+1 2 0
+Labels of the nodes: 0 0 0 
+Stack top : 2
+CSP:
+Min Size=0
+0: 0 7 
+1: 
+2: 2 6 
+
+
+
+Count of 1: 0
+
+Infrequent
+Subgraph:
+
+Nodes in subgraph: 3
+ Edges in Subgraph: 2
+
+The edges in the subgraph are
+0 1 0
+1 2 0
+Labels of the nodes: 0 0 1 
+Stack top : 2
+CSP:
+Min Size=2
+0: 0 7 
+1: 2 6 
+2: 1 3 4 8 9 
+
+
+
+Considering assignment of 2 to 1
+Assigning it
+Assigning 2 to 1
+Assigning 0 to 0
+Assigning 3 to 2
+Considering assignment of 6 to 1
+Assigning it
+Assigning 6 to 1
+Assigning 7 to 0
+Assigning 8 to 2
+Count of 1: 2
+
+Considering assignment of 7 to 0
+Assigning it
+Assigning 7 to 0
+Assigning 2 to 1
+Assigning 4 to 2
+Considering assignment of 0 to 0
+Assigning it
+Assigning 0 to 0
+Assigning 2 to 1
+Assigning 4 to 2
+Count of 0: 2
+
+Considering assignment of 4 to 2
+Assigning it
+Assigning 4 to 2
+Assigning 2 to 1
+Assigning 7 to 0
+Considering assignment of 3 to 2
+Assigning it
+Assigning 3 to 2
+Assigning 2 to 1
+Assigning 7 to 0
+Count of 2: 2
+
+Frequent : 3
+Subgraph:
+
+Nodes in subgraph: 3
+ Edges in Subgraph: 3
+
+The edges in the subgraph are
+0 1 0
+1 2 0
+2 0 0
+Labels of the nodes: 0 0 1 
+Stack top : 2
+CSP:
+Min Size=1
+0: 7 
+1: 2 6 
+2: 3 4 9 
+
+
+
+Considering assignment of 7 to 0
+Assigning it
+Assigning 7 to 0
+Assigning 4 to 2
+Assigning 2 to 1
+Count of 0: 1
+
+Infrequent
+Subgraph:
+
+Nodes in subgraph: 3
+ Edges in Subgraph: 3
+
+The edges in the subgraph are
+0 1 0
+1 2 0
+2 0 1
+Labels of the nodes: 0 0 1 
+Stack top : 2
+CSP:
+Min Size=1
+0: 7 
+1: 2 6 
+2: 1 8 9 
+
+
+
+Considering assignment of 7 to 0
+Assigning it
+Assigning 7 to 0
+Assigning 8 to 2
+Count of 0: 0
+
+Infrequent
+Subgraph:
+
+Nodes in subgraph: 3
+ Edges in Subgraph: 3
+
+The edges in the subgraph are
+0 1 0
+1 2 0
+2 1 0
+Labels of the nodes: 0 0 1 
+Stack top : 2
+CSP:
+Min Size=1
+0: 0 7 
+1: 2 
+2: 3 4 9 
+
+
+
+Considering assignment of 2 to 1
+Assigning it
+Assigning 2 to 1
+Count of 1: 0
+
+Infrequent
+Subgraph:
+
+Nodes in subgraph: 3
+ Edges in Subgraph: 3
+
+The edges in the subgraph are
+0 1 0
+1 2 0
+2 1 1
+Labels of the nodes: 0 0 1 
+Stack top : 2
+CSP:
+Min Size=1
+0: 0 7 
+1: 2 
+2: 1 8 9 
+
+
+
+Considering assignment of 2 to 1
+Assigning it
+Assigning 2 to 1
+Count of 1: 0
+
+Infrequent
+Subgraph:
+
+Nodes in subgraph: 4
+ Edges in Subgraph: 3
+
+The edges in the subgraph are
+0 1 0
+1 2 0
+2 3 0
+Labels of the nodes: 0 0 1 0 
+Stack top : 3
+CSP:
+Min Size=2
+0: 0 7 
+1: 2 6 
+2: 3 4 9 
+3: 2 5 7 
+
+
+
+Considering assignment of 2 to 1
+Assigning it
+Assigning 2 to 1
+Assigning 4 to 2
+Assigning 7 to 3
+Assigning 0 to 0
+Considering assignment of 6 to 1
+Breaking
+Count of 1: 1
+
+Infrequent
+Subgraph:
+
+Nodes in subgraph: 4
+ Edges in Subgraph: 3
+
+The edges in the subgraph are
+0 1 0
+1 2 0
+2 3 1
+Labels of the nodes: 0 0 1 0 
+Stack top : 3
+CSP:
+Min Size=2
+0: 0 7 
+1: 2 6 
+2: 1 8 9 
+3: 2 7 11 
+
+
+
+Considering assignment of 2 to 1
+Assigning it
+Assigning 2 to 1
+Considering assignment of 6 to 1
+Breaking
+Count of 1: 0
+
+Infrequent
+Subgraph:
+
+Nodes in subgraph: 4
+ Edges in Subgraph: 3
+
+The edges in the subgraph are
+0 1 0
+1 2 0
+2 3 0
+Labels of the nodes: 0 0 1 1 
+Stack top : 3
+CSP:
+Min Size=2
+0: 0 7 
+1: 2 6 
+2: 1 3 
+3: 4 9 
+
+
+
+Considering assignment of 2 to 1
+Assigning it
+Assigning 2 to 1
+Assigning 3 to 2
+Assigning 4 to 3
+Assigning 0 to 0
+Considering assignment of 6 to 1
+Breaking
+Count of 1: 1
+
+Infrequent
+Subgraph:
+
+Nodes in subgraph: 4
+ Edges in Subgraph: 3
+
+The edges in the subgraph are
+0 1 0
+1 2 0
+2 3 1
+Labels of the nodes: 0 0 1 1 
+Stack top : 3
+CSP:
+Min Size=0
+0: 0 7 
+1: 2 6 
+2: 
+3: 9 
+
+
+
+Count of 2: 0
+
+Infrequent
+Subgraph:
+
+Nodes in subgraph: 4
+ Edges in Subgraph: 3
+
+The edges in the subgraph are
+0 1 0
+1 2 0
+1 3 0
+Labels of the nodes: 0 0 1 0 
+Stack top : 3
+CSP:
+Min Size=0
+0: 0 7 
+1: 
+2: 1 3 4 8 9 
+3: 2 6 
+
+
+
+Count of 1: 0
+
+Infrequent
+Subgraph:
+
+Nodes in subgraph: 4
+ Edges in Subgraph: 3
+
+The edges in the subgraph are
+0 1 0
+1 2 0
+1 3 0
+Labels of the nodes: 0 0 1 1 
+Stack top : 3
+CSP:
+Min Size=2
+0: 0 7 
+1: 2 6 
+2: 1 3 4 8 9 
+3: 1 3 4 8 9 
+
+
+
+Considering assignment of 2 to 1
+Assigning it
+Assigning 2 to 1
+Assigning 0 to 0
+Assigning 3 to 2
+Assigning 4 to 3
+Considering assignment of 6 to 1
+Breaking
+Count of 1: 1
+
+Infrequent
+Subgraph:
+
+Nodes in subgraph: 4
+ Edges in Subgraph: 3
+
+The edges in the subgraph are
+0 1 0
+1 2 0
+1 3 1
+Labels of the nodes: 0 0 1 1 
+Stack top : 3
+CSP:
+Min Size=0
+0: 0 7 
+1: 
+2: 1 3 4 8 9 
+3: 10 
+
+
+
+Count of 1: 0
+
+Infrequent
+Subgraph:
+
+Nodes in subgraph: 4
+ Edges in Subgraph: 3
+
+The edges in the subgraph are
+0 1 0
+0 3 0
+1 2 0
+Labels of the nodes: 0 0 1 0 
+Stack top : 3
+CSP:
+Min Size=2
+0: 0 7 
+1: 2 6 
+2: 1 3 4 8 9 
+3: 2 6 
+
+
+
+Considering assignment of 0 to 0
+Assigning it
+Assigning 0 to 0
+Assigning 2 to 1
+Considering assignment of 7 to 0
+Assigning it
+Assigning 7 to 0
+Assigning 2 to 1
+Assigning 3 to 2
+Count of 0: 0
+
+Infrequent
+Subgraph:
+
+Nodes in subgraph: 4
+ Edges in Subgraph: 3
+
+The edges in the subgraph are
+0 1 0
+0 3 0
+1 2 0
+Labels of the nodes: 0 0 1 1 
+Stack top : 3
+CSP:
+Min Size=2
+0: 0 7 
+1: 2 6 
+2: 1 3 4 8 9 
+3: 1 3 4 8 9 
+
+
+
+Considering assignment of 0 to 0
+Assigning it
+Assigning 0 to 0
+Assigning 2 to 1
+Assigning 1 to 3
+Assigning 3 to 2
+Considering assignment of 7 to 0
+Assigning it
+Assigning 7 to 0
+Assigning 9 to 3
+Assigning 2 to 1
+Assigning 3 to 2
+Count of 0: 2
+
+Considering assignment of 2 to 1
+Assigning it
+Assigning 2 to 1
+Assigning 0 to 0
+Assigning 1 to 3
+Assigning 3 to 2
+Considering assignment of 6 to 1
+Breaking
+Count of 1: 1
+
+Infrequent
+Subgraph:
+
+Nodes in subgraph: 4
+ Edges in Subgraph: 3
+
+The edges in the subgraph are
+0 1 0
+0 3 1
+1 2 0
+Labels of the nodes: 0 0 1 1 
+Stack top : 3
+CSP:
+Min Size=0
+0: 
+1: 2 6 
+2: 1 3 4 8 9 
+3: 10 
+
+
+
+Count of 0: 0
+
+Infrequent
+Subgraph:
+
+Nodes in subgraph: 3
+ Edges in Subgraph: 2
+
+The edges in the subgraph are
+0 1 0
+1 2 1
+Labels of the nodes: 0 0 1 
+Stack top : 2
+CSP:
+Min Size=0
+0: 0 7 
+1: 
+2: 10 
+
+
+
+Count of 1: 0
+
+Infrequent
+Subgraph:
+
+Nodes in subgraph: 3
+ Edges in Subgraph: 2
+
+The edges in the subgraph are
+0 1 0
+0 2 0
+Labels of the nodes: 0 0 0 
+Stack top : 2
+CSP:
+Min Size=2
+0: 0 7 
+1: 2 6 
+2: 2 6 
+
+
+
+Considering assignment of 0 to 0
+Assigning it
+Assigning 0 to 0
+Assigning 2 to 1
+Considering assignment of 7 to 0
+Breaking
+Count of 0: 0
+
+Infrequent
+Subgraph:
+
+Nodes in subgraph: 3
+ Edges in Subgraph: 2
+
+The edges in the subgraph are
+0 1 0
+0 2 0
+Labels of the nodes: 0 0 1 
+Stack top : 2
+CSP:
+Min Size=2
+0: 0 7 
+1: 2 6 
+2: 1 3 4 8 9 
+
+
+
+Considering assignment of 0 to 0
+Assigning it
+Assigning 0 to 0
+Assigning 2 to 1
+Assigning 1 to 2
+Considering assignment of 7 to 0
+Breaking
+Count of 0: 1
+
+Infrequent
+Subgraph:
+
+Nodes in subgraph: 3
+ Edges in Subgraph: 2
+
+The edges in the subgraph are
+0 1 0
+0 2 1
+Labels of the nodes: 0 0 1 
+Stack top : 2
+CSP:
+Min Size=0
+0: 
+1: 2 6 
+2: 10 
+
+
+
+Count of 0: 0
+
+Infrequent
+Done with this edge
+Subgraph:
+
+Nodes in subgraph: 2
+ Edges in Subgraph: 1
+
+The edges in the subgraph are
+0 1 0
+Labels of the nodes: 0 1 
+Stack top : 1
+CSP:
+Min Size=5
+0: 0 2 5 6 7 
+1: 1 3 4 8 9 
+
+
+
+Considering assignment of 0 to 0
+Assigning it
+Assigning 0 to 0
+Assigning 1 to 1
+Considering assignment of 2 to 0
+Assigning it
+Assigning 2 to 0
+Assigning 3 to 1
+Count of 0: 2
+
+Considering assignment of 3 to 1
+Assigning it
+Assigning 3 to 1
+Considering assignment of 4 to 1
+Assigning it
+Assigning 4 to 1
+Assigning 5 to 0
+Considering assignment of 1 to 1
+Assigning it
+Assigning 1 to 1
+Assigning 0 to 0
+Count of 1: 2
+
+Frequent : 2
+Subgraph:
+
+Nodes in subgraph: 2
+ Edges in Subgraph: 2
+
+The edges in the subgraph are
+0 1 0
+1 0 0
+Labels of the nodes: 0 1 
+Stack top : 1
+CSP:
+Min Size=3
+0: 2 5 7 
+1: 3 4 9 
+
+
+
+Considering assignment of 2 to 0
+Breaking
+Count of 0: 0
+
+Infrequent
+Subgraph:
+
+Nodes in subgraph: 2
+ Edges in Subgraph: 2
+
+The edges in the subgraph are
+0 1 0
+1 0 1
+Labels of the nodes: 0 1 
+Stack top : 1
+CSP:
+Min Size=2
+0: 2 7 
+1: 1 8 9 
+
+
+
+Considering assignment of 2 to 0
+Breaking
+Count of 0: 0
+
+Infrequent
+Subgraph:
+
+Nodes in subgraph: 3
+ Edges in Subgraph: 2
+
+The edges in the subgraph are
+0 1 0
+1 2 0
+Labels of the nodes: 0 1 0 
+Stack top : 2
+CSP:
+Min Size=3
+0: 0 2 5 6 7 
+1: 3 4 9 
+2: 2 5 7 
+
+
+
+Considering assignment of 3 to 1
+Assigning it
+Assigning 3 to 1
+Considering assignment of 4 to 1
+Assigning it
+Assigning 4 to 1
+Considering assignment of 9 to 1
+Assigning it
+Assigning 9 to 1
+Count of 1: 0
+
+Infrequent
+Subgraph:
+
+Nodes in subgraph: 3
+ Edges in Subgraph: 2
+
+The edges in the subgraph are
+0 1 0
+1 2 1
+Labels of the nodes: 0 1 0 
+Stack top : 2
+CSP:
+Min Size=3
+0: 0 2 5 6 7 
+1: 1 8 9 
+2: 2 7 11 
+
+
+
+Considering assignment of 1 to 1
+Breaking
+Count of 1: 0
+
+Infrequent
+Subgraph:
+
+Nodes in subgraph: 3
+ Edges in Subgraph: 2
+
+The edges in the subgraph are
+0 1 0
+1 2 0
+Labels of the nodes: 0 1 1 
+Stack top : 2
+CSP:
+Min Size=2
+0: 0 2 5 6 7 
+1: 1 3 
+2: 4 9 
+
+
+
+Considering assignment of 1 to 1
+Breaking
+Count of 1: 0
+
+Infrequent
+Subgraph:
+
+Nodes in subgraph: 3
+ Edges in Subgraph: 2
+
+The edges in the subgraph are
+0 1 0
+1 2 1
+Labels of the nodes: 0 1 1 
+Stack top : 2
+CSP:
+Min Size=0
+0: 0 2 5 6 7 
+1: 
+2: 9 
+
+
+
+Count of 1: 0
+
+Infrequent
+Subgraph:
+
+Nodes in subgraph: 3
+ Edges in Subgraph: 2
+
+The edges in the subgraph are
+0 1 0
+0 2 0
+Labels of the nodes: 0 1 0 
+Stack top : 2
+CSP:
+Min Size=2
+0: 0 7 
+1: 1 3 4 8 9 
+2: 2 6 
+
+
+
+Considering assignment of 0 to 0
+Assigning it
+Assigning 0 to 0
+Considering assignment of 7 to 0
+Breaking
+Count of 0: 0
+
+Infrequent
+Subgraph:
+
+Nodes in subgraph: 3
+ Edges in Subgraph: 2
+
+The edges in the subgraph are
+0 1 0
+0 2 0
+Labels of the nodes: 0 1 1 
+Stack top : 2
+CSP:
+Min Size=5
+0: 0 2 5 6 7 
+1: 1 3 4 8 9 
+2: 1 3 4 8 9 
+
+
+
+Considering assignment of 0 to 0
+Assigning it
+Assigning 0 to 0
+Considering assignment of 2 to 0
+Breaking
+Count of 0: 0
+
+Infrequent
+Subgraph:
+
+Nodes in subgraph: 3
+ Edges in Subgraph: 2
+
+The edges in the subgraph are
+0 1 0
+0 2 1
+Labels of the nodes: 0 1 1 
+Stack top : 2
+CSP:
+Min Size=0
+0: 
+1: 1 3 4 8 9 
+2: 10 
+
+
+
+Count of 0: 0
+
+Infrequent
+Done with this edge
+Subgraph:
+
+Nodes in subgraph: 2
+ Edges in Subgraph: 1
+
+The edges in the subgraph are
+0 1 1
+Labels of the nodes: 0 1 
+Stack top : 1
+CSP:
+Min Size=1
+0: 11 
+1: 10 
+
+
+
+Considering assignment of 11 to 0
+Assigning it
+Assigning 11 to 0
+Assigning 10 to 1
+Count of 0: 1
+
+Infrequent
+Done with this edge
+Subgraph:
+
+Nodes in subgraph: 2
+ Edges in Subgraph: 1
+
+The edges in the subgraph are
+0 1 0
+Labels of the nodes: 1 0 
+Stack top : 1
+CSP:
+Min Size=3
+0: 3 4 9 
+1: 2 5 7 
+
+
+
+Considering assignment of 3 to 0
+Assigning it
+Assigning 3 to 0
+Assigning 5 to 1
+Considering assignment of 4 to 0
+Assigning it
+Assigning 4 to 0
+Considering assignment of 9 to 0
+Assigning it
+Assigning 9 to 0
+Count of 0: 1
+
+Infrequent
+Done with this edge
+Subgraph:
+
+Nodes in subgraph: 2
+ Edges in Subgraph: 1
+
+The edges in the subgraph are
+0 1 1
+Labels of the nodes: 1 0 
+Stack top : 1
+CSP:
+Min Size=3
+0: 1 8 9 
+1: 2 7 11 
+
+
+
+Considering assignment of 1 to 0
+Breaking
+Count of 0: 0
+
+Infrequent
+Done with this edge
+Subgraph:
+
+Nodes in subgraph: 2
+ Edges in Subgraph: 1
+
+The edges in the subgraph are
+0 1 0
+Labels of the nodes: 1 1 
+Stack top : 1
+CSP:
+Min Size=2
+0: 1 3 
+1: 4 9 
+
+
+
+Considering assignment of 1 to 0
+Breaking
+Count of 0: 0
+
+Infrequent
+Done with this edge
+Subgraph:
+
+Nodes in subgraph: 2
+ Edges in Subgraph: 1
+
+The edges in the subgraph are
+0 1 1
+Labels of the nodes: 1 1 
+Stack top : 1
+CSP:
+Min Size=1
+0: 10 
+1: 9 
+
+
+
+Considering assignment of 10 to 0
+Assigning it
+Assigning 10 to 0
+Assigning 9 to 1
+Count of 0: 1
+
+Infrequent
+Done with this edge
+Frequent Subgraphs:
+Subgraph:
+
+Nodes in subgraph: 2
+ Edges in Subgraph: 1
+
+The edges in the subgraph are
+0 1 0
+Labels of the nodes: 0 0 
+Stack top : 1
+Subgraph:
+
+Nodes in subgraph: 3
+ Edges in Subgraph: 2
+
+The edges in the subgraph are
+0 1 0
+1 2 0
+Labels of the nodes: 0 0 1 
+Stack top : 2
+Subgraph:
+
+Nodes in subgraph: 2
+ Edges in Subgraph: 1
+
+The edges in the subgraph are
+0 1 0
+Labels of the nodes: 0 1 
+Stack top : 1

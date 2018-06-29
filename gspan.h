@@ -35,10 +35,6 @@ void subgraphExtension(Subgraphs currSubgraph, CSP csp){
 		printf("Frequent : %d\n",currSubgraph.numberOfNodes);
 		freqSubgraphs.push_back(currSubgraph);
 	}
-	char ch = getchar();
-	ch = getchar();
-	if(ch){}
-	else{}
 	/*if(randomTermination()){
 		return;
 	}*/

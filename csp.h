@@ -4,7 +4,7 @@ CSP findDomain(int edgeIndex)
 {
 	CSP newCSP;
 	newCSP.domain.resize(2);
-	GraphEdge currEdge = edgeList[edgeIndex];
+	GraphEdge currEdge=distinctEdges[edgeIndex];
 	int labelu=nodeLabels[currEdge.u];
 	int labelv=nodeLabels[currEdge.v];
 	int sz = nodesWithLabel[labelu].size();
@@ -103,7 +103,7 @@ void enforceArcConsistency(int var, int val){
 		stk.push(pii(v, domainSize[v]));
 		if(forwardIterator!=-1) domainSize[v]=forwardIterator;
 	}
-	printf("After enforcement\n");
+	/*printf("After enforcement\n");
 	for(int i = 0 ;i < searchSubgraph.numberOfNodes;i++)
 		{
 			printf("%d: %d\n\n",i,domainSize[i]);
@@ -112,7 +112,7 @@ void enforceArcConsistency(int var, int val){
 				printf("%d ",searchCSP.domain[i][j]);
 			}
 			printf("\n");
-		}
+		}*/
 		
 }
 
@@ -124,10 +124,10 @@ void restoreDomains(int nxt){
 		stkTop = stk.top();
 		stk.pop();
 		domainSize[stkTop.first] = stkTop.second;
-	}
+	}/*
 	printf("After restoration \n");
 	for(int i = 0 ;i < searchSubgraph.numberOfNodes;i++)
-	printf("%d\n\n",domainSize[i]);
+	printf("%d\n\n",domainSize[i]);*/
 }
 
 int constrainingDegreeOfValue(int nxt,int value){ //Number of additional constraints imposed by assigining value to node
@@ -199,16 +199,16 @@ bool search(int assignedNodes){
 	sort(domainOrder, domainOrder+sz, cmpCSPValues);
 	bool res;
 	for(int i=0; i<sz; i++){
-		if(markNodes[searchCSP.domain[nxt][i]])break;
+		if(markNodes[domainOrder[i].value])break;
 		isAssigned[nxt]=true;
 		sol[nxt]=domainOrder[i].value;
 		printf("Assigning %d to %d\n", sol[nxt], nxt);
-		markNodes[domainOrder[i].value] = true;
+		markNodes[sol[nxt]] = true;
 		enforceArcConsistency(nxt,domainOrder[i].value);
 		assert(domainSizeConsistent(searchSubgraph));
 		res=search(assignedNodes+1);
 		restoreDomains(nxt);
-		markNodes[domainOrder[i].value] = false;
+		markNodes[sol[nxt]] = false;
 		isAssigned[nxt]=false;
 		//printf("Domains restored\n");
 		if(res) return true;
@@ -233,7 +233,11 @@ bool isFrequent(Subgraphs sub, CSP csp)
 		count=0;
 		for(int i=0; i<(int)searchCSP.domain[nxt].size(); i++){
 			printf("Considering assignment of %d to %d\n", searchCSP.domain[nxt][i], nxt);
-			//if(markNodes[searchCSP.domain[nxt][i]])break;
+			if(markNodes[searchCSP.domain[nxt][i]])
+			{
+				printf("Breaking\n");
+				break;
+			}
 			printf("Assigning it\n");
 			isAssigned[nxt]=true;
 			sol[nxt]=searchCSP.domain[nxt][i];
