@@ -240,6 +240,11 @@ bool isFrequent(Subgraphs sub, CSP csp)
 		count=0;
 		for(int i=0; i<(int)searchCSP.domain[nxt].size(); i++){
 			printf("Considering assignment of %d to %d\n", searchCSP.domain[nxt][i], nxt);
+			if(marked.find(pii(nxt, searchCSP.domain[nxt][i]))!=marked.end()){
+				printf("A valid isomorphism assigning %d to %d has already been computed\n", searchCSP.domain[nxt][i], nxt);
+				count++;
+				continue;
+			}
 			if(markNodes[searchCSP.domain[nxt][i]])
 			{
 				assert(false);
@@ -255,7 +260,12 @@ bool isFrequent(Subgraphs sub, CSP csp)
 			enforceArcConsistency(nxt,searchCSP.domain[nxt][i]);
 			assert(domainSizeConsistent(searchSubgraph));
 			//puts("Arc consistency enforced\n");
-			if(search(1)) count++;
+			if(search(1)){
+				count++;
+				for(int i=0; i<searchSubgraph.numberOfNodes; i++){
+					marked.insert(pii(i, sol[i]));
+				}
+			}
 			restoreDomains(nxt);
 			markNodes[sol[nxt]] = false;
 			//printf("Domains restored\n");

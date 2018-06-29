@@ -10,7 +10,7 @@ void printFrequentSubgraphs(){
 
 int main(){
 	//freopen("bigin.txt", "r", stdin);
-	freopen("out.txt","w",stdout);
+	freopen("setout5.txt","w",stdout);
 	srand(time(NULL));
 	takeInput();
 	//printIncomingNodes();

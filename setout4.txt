@@ -1,0 +1,10 @@
+Frequent Subgraphs:
+Subgraph:
+
+Nodes in subgraph: 2
+ Edges in Subgraph: 1
+
+The edges in the subgraph are
+0 1 0
+Labels of the nodes: 0 1 
+Stack top : 1
