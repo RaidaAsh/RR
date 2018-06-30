@@ -53,8 +53,6 @@ CSP domainAfterBackwardExtension(int u, int uLabel, int v, int vLabel, int edgeL
 	}
 	newCsp.mnSize=min(newCsp.mnSize, (unsigned int) newCsp.domain[v].size());
 	return newCsp;
-	return newCsp;
-	
 }
 
 CSP domainAfterForwardExtension(int u, int uLabel, int vLabel, int edgeLabel, CSP csp){

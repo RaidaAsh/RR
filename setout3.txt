@@ -1,4 +1,6 @@
 Frequent Subgraphs:
+Number of subgraphs 14
+
 Subgraph:
 
 Nodes in subgraph: 2

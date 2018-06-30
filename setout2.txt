@@ -1,0 +1,516 @@
+Frequent Subgraphs:
+Number of subgraphs 44
+
+Subgraph:
+
+Nodes in subgraph: 2
+ Edges in Subgraph: 1
+
+The edges in the subgraph are
+0 1 0
+Labels of the nodes: 0 0 
+Stack top : 1
+Subgraph:
+
+Nodes in subgraph: 3
+ Edges in Subgraph: 2
+
+The edges in the subgraph are
+0 1 0
+1 2 0
+Labels of the nodes: 0 0 1 
+Stack top : 2
+Subgraph:
+
+Nodes in subgraph: 4
+ Edges in Subgraph: 3
+
+The edges in the subgraph are
+0 1 0
+0 3 0
+1 2 0
+Labels of the nodes: 0 0 1 1 
+Stack top : 3
+Subgraph:
+
+Nodes in subgraph: 3
+ Edges in Subgraph: 2
+
+The edges in the subgraph are
+0 1 0
+0 2 0
+Labels of the nodes: 0 0 1 
+Stack top : 2
+Subgraph:
+
+Nodes in subgraph: 2
+ Edges in Subgraph: 1
+
+The edges in the subgraph are
+0 1 0
+Labels of the nodes: 0 1 
+Stack top : 1
+Subgraph:
+
+Nodes in subgraph: 3
+ Edges in Subgraph: 2
+
+The edges in the subgraph are
+0 1 0
+1 2 0
+Labels of the nodes: 0 1 0 
+Stack top : 2
+Subgraph:
+
+Nodes in subgraph: 4
+ Edges in Subgraph: 3
+
+The edges in the subgraph are
+0 1 0
+1 2 0
+2 3 0
+Labels of the nodes: 0 1 0 1 
+Stack top : 3
+Subgraph:
+
+Nodes in subgraph: 4
+ Edges in Subgraph: 4
+
+The edges in the subgraph are
+0 1 0
+1 2 0
+2 3 0
+3 0 0
+Labels of the nodes: 0 1 0 1 
+Stack top : 3
+Subgraph:
+
+Nodes in subgraph: 5
+ Edges in Subgraph: 4
+
+The edges in the subgraph are
+0 1 0
+1 2 0
+2 3 0
+3 4 0
+Labels of the nodes: 0 1 0 1 0 
+Stack top : 4
+Subgraph:
+
+Nodes in subgraph: 6
+ Edges in Subgraph: 5
+
+The edges in the subgraph are
+0 1 0
+1 2 0
+2 3 0
+3 4 0
+4 5 0
+Labels of the nodes: 0 1 0 1 0 1 
+Stack top : 5
+Subgraph:
+
+Nodes in subgraph: 6
+ Edges in Subgraph: 6
+
+The edges in the subgraph are
+0 1 0
+1 2 0
+2 3 0
+3 4 0
+4 5 0
+5 0 0
+Labels of the nodes: 0 1 0 1 0 1 
+Stack top : 5
+Subgraph:
+
+Nodes in subgraph: 3
+ Edges in Subgraph: 2
+
+The edges in the subgraph are
+0 1 0
+1 2 1
+Labels of the nodes: 0 1 0 
+Stack top : 2
+Subgraph:
+
+Nodes in subgraph: 4
+ Edges in Subgraph: 3
+
+The edges in the subgraph are
+0 1 0
+1 2 1
+2 3 0
+Labels of the nodes: 0 1 0 1 
+Stack top : 3
+Subgraph:
+
+Nodes in subgraph: 5
+ Edges in Subgraph: 4
+
+The edges in the subgraph are
+0 1 0
+1 2 1
+2 3 0
+3 4 0
+Labels of the nodes: 0 1 0 1 0 
+Stack top : 4
+Subgraph:
+
+Nodes in subgraph: 6
+ Edges in Subgraph: 5
+
+The edges in the subgraph are
+0 1 0
+1 2 1
+2 3 0
+3 4 0
+4 5 0
+Labels of the nodes: 0 1 0 1 0 1 
+Stack top : 5
+Subgraph:
+
+Nodes in subgraph: 6
+ Edges in Subgraph: 6
+
+The edges in the subgraph are
+0 1 0
+1 2 1
+2 3 0
+3 4 0
+4 5 0
+5 2 0
+Labels of the nodes: 0 1 0 1 0 1 
+Stack top : 5
+Subgraph:
+
+Nodes in subgraph: 7
+ Edges in Subgraph: 6
+
+The edges in the subgraph are
+0 1 0
+1 2 1
+2 3 0
+3 4 0
+4 5 0
+5 6 0
+Labels of the nodes: 0 1 0 1 0 1 0 
+Stack top : 6
+Subgraph:
+
+Nodes in subgraph: 8
+ Edges in Subgraph: 7
+
+The edges in the subgraph are
+0 1 0
+1 2 1
+2 3 0
+3 4 0
+4 5 0
+5 6 0
+6 7 0
+Labels of the nodes: 0 1 0 1 0 1 0 1 
+Stack top : 7
+Subgraph:
+
+Nodes in subgraph: 8
+ Edges in Subgraph: 8
+
+The edges in the subgraph are
+0 1 0
+1 2 1
+2 3 0
+3 4 0
+4 5 0
+5 6 0
+6 7 0
+7 2 0
+Labels of the nodes: 0 1 0 1 0 1 0 1 
+Stack top : 7
+Subgraph:
+
+Nodes in subgraph: 3
+ Edges in Subgraph: 2
+
+The edges in the subgraph are
+0 1 0
+1 2 0
+Labels of the nodes: 0 1 1 
+Stack top : 2
+Subgraph:
+
+Nodes in subgraph: 4
+ Edges in Subgraph: 3
+
+The edges in the subgraph are
+0 1 0
+1 2 0
+2 3 0
+Labels of the nodes: 0 1 1 0 
+Stack top : 3
+Subgraph:
+
+Nodes in subgraph: 5
+ Edges in Subgraph: 4
+
+The edges in the subgraph are
+0 1 0
+1 2 0
+2 3 0
+3 4 0
+Labels of the nodes: 0 1 1 0 1 
+Stack top : 4
+Subgraph:
+
+Nodes in subgraph: 3
+ Edges in Subgraph: 2
+
+The edges in the subgraph are
+0 1 0
+0 2 0
+Labels of the nodes: 0 1 0 
+Stack top : 2
+Subgraph:
+
+Nodes in subgraph: 4
+ Edges in Subgraph: 3
+
+The edges in the subgraph are
+0 1 0
+0 2 0
+2 3 0
+Labels of the nodes: 0 1 0 1 
+Stack top : 3
+Subgraph:
+
+Nodes in subgraph: 2
+ Edges in Subgraph: 1
+
+The edges in the subgraph are
+0 1 0
+Labels of the nodes: 1 0 
+Stack top : 1
+Subgraph:
+
+Nodes in subgraph: 3
+ Edges in Subgraph: 2
+
+The edges in the subgraph are
+0 1 0
+1 2 0
+Labels of the nodes: 1 0 1 
+Stack top : 2
+Subgraph:
+
+Nodes in subgraph: 4
+ Edges in Subgraph: 3
+
+The edges in the subgraph are
+0 1 0
+1 2 0
+2 3 0
+Labels of the nodes: 1 0 1 0 
+Stack top : 3
+Subgraph:
+
+Nodes in subgraph: 4
+ Edges in Subgraph: 4
+
+The edges in the subgraph are
+0 1 0
+1 2 0
+2 3 0
+3 0 0
+Labels of the nodes: 1 0 1 0 
+Stack top : 3
+Subgraph:
+
+Nodes in subgraph: 5
+ Edges in Subgraph: 4
+
+The edges in the subgraph are
+0 1 0
+1 2 0
+2 3 0
+3 4 0
+Labels of the nodes: 1 0 1 0 1 
+Stack top : 4
+Subgraph:
+
+Nodes in subgraph: 6
+ Edges in Subgraph: 5
+
+The edges in the subgraph are
+0 1 0
+1 2 0
+2 3 0
+3 4 0
+4 5 0
+Labels of the nodes: 1 0 1 0 1 0 
+Stack top : 5
+Subgraph:
+
+Nodes in subgraph: 6
+ Edges in Subgraph: 6
+
+The edges in the subgraph are
+0 1 0
+1 2 0
+2 3 0
+3 4 0
+4 5 0
+5 0 0
+Labels of the nodes: 1 0 1 0 1 0 
+Stack top : 5
+Subgraph:
+
+Nodes in subgraph: 2
+ Edges in Subgraph: 1
+
+The edges in the subgraph are
+0 1 1
+Labels of the nodes: 1 0 
+Stack top : 1
+Subgraph:
+
+Nodes in subgraph: 3
+ Edges in Subgraph: 2
+
+The edges in the subgraph are
+0 1 1
+1 2 0
+Labels of the nodes: 1 0 1 
+Stack top : 2
+Subgraph:
+
+Nodes in subgraph: 4
+ Edges in Subgraph: 3
+
+The edges in the subgraph are
+0 1 1
+1 2 0
+2 3 0
+Labels of the nodes: 1 0 1 0 
+Stack top : 3
+Subgraph:
+
+Nodes in subgraph: 5
+ Edges in Subgraph: 4
+
+The edges in the subgraph are
+0 1 1
+1 2 0
+2 3 0
+3 4 0
+Labels of the nodes: 1 0 1 0 1 
+Stack top : 4
+Subgraph:
+
+Nodes in subgraph: 5
+ Edges in Subgraph: 5
+
+The edges in the subgraph are
+0 1 1
+1 2 0
+2 3 0
+3 4 0
+4 1 0
+Labels of the nodes: 1 0 1 0 1 
+Stack top : 4
+Subgraph:
+
+Nodes in subgraph: 6
+ Edges in Subgraph: 5
+
+The edges in the subgraph are
+0 1 1
+1 2 0
+2 3 0
+3 4 0
+4 5 0
+Labels of the nodes: 1 0 1 0 1 0 
+Stack top : 5
+Subgraph:
+
+Nodes in subgraph: 7
+ Edges in Subgraph: 6
+
+The edges in the subgraph are
+0 1 1
+1 2 0
+2 3 0
+3 4 0
+4 5 0
+5 6 0
+Labels of the nodes: 1 0 1 0 1 0 1 
+Stack top : 6
+Subgraph:
+
+Nodes in subgraph: 7
+ Edges in Subgraph: 7
+
+The edges in the subgraph are
+0 1 1
+1 2 0
+2 3 0
+3 4 0
+4 5 0
+5 6 0
+6 1 0
+Labels of the nodes: 1 0 1 0 1 0 1 
+Stack top : 6
+Subgraph:
+
+Nodes in subgraph: 2
+ Edges in Subgraph: 1
+
+The edges in the subgraph are
+0 1 0
+Labels of the nodes: 1 1 
+Stack top : 1
+Subgraph:
+
+Nodes in subgraph: 3
+ Edges in Subgraph: 2
+
+The edges in the subgraph are
+0 1 0
+1 2 0
+Labels of the nodes: 1 1 0 
+Stack top : 2
+Subgraph:
+
+Nodes in subgraph: 4
+ Edges in Subgraph: 3
+
+The edges in the subgraph are
+0 1 0
+1 2 0
+2 3 0
+Labels of the nodes: 1 1 0 1 
+Stack top : 3
+Subgraph:
+
+Nodes in subgraph: 5
+ Edges in Subgraph: 4
+
+The edges in the subgraph are
+0 1 0
+1 2 0
+2 3 0
+3 4 0
+Labels of the nodes: 1 1 0 1 0 
+Stack top : 4
+Subgraph:
+
+Nodes in subgraph: 5
+ Edges in Subgraph: 5
+
+The edges in the subgraph are
+0 1 0
+1 2 0
+2 3 0
+3 4 0
+4 1 0
+Labels of the nodes: 1 1 0 1 0 
+Stack top : 4

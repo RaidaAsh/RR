@@ -1,35 +1,27 @@
 #include "SubgraphDebugKit.h"
 
 CSP findDomain(int edgeIndex)
-{
-	printf("Finding domain:\n");
-	CSP newCSP;
+{	CSP newCSP;
 	newCSP.domain.resize(2);
 	GraphEdge currEdge = distinctEdges[edgeIndex];
 	int labelu=nodeLabels[currEdge.u];
 	int labelv=nodeLabels[currEdge.v];
 	int sz = nodesWithLabel[labelu].size();
 	int currNode;
-	printf("For domain of %d\n", labelu);
 	for(int i = 0;i < sz; i++)
 	{
 		currNode = nodesWithLabel[labelu][i];
-		printf("Considering node %d\n", currNode);
 		if(outgoingLabels[currNode].find(pii(nodeLabels[currEdge.v],currEdge.edgeLabel)) != outgoingLabels[currNode].end())
 		{
-			printf("pushing %d in domain\n", currNode);
 			newCSP.domain[0].push_back(currNode);
 		}
 	}
 	sz = nodesWithLabel[labelv].size();
-	printf("For domain of %d\n", labelv);
 	for(int i = 0;i < sz; i++)
 	{
 		currNode = nodesWithLabel[labelv][i];
-		printf("Considering node %d\n", currNode);
 		if(incomingLabels[currNode].find(pii(nodeLabels[currEdge.u],currEdge.edgeLabel)) != incomingLabels[currNode].end())
 		{
-			printf("pushing %d in domain\n", currNode);
 			newCSP.domain[1].push_back(currNode);
 		}
 	}
@@ -47,7 +39,7 @@ Subgraphs searchSubgraph;
 CSPValues domainOrder[NODES];
 stack <pii> stk;
 bool markNodes[NODES];
-
+long long int toBeDeleted[NODES],iterationNo;
 bool domainSizeConsistent(Subgraphs sub){
 	for(int i=0; i<(int)sub.numberOfNodes; i++){
 		if(domainSize[i]<0 || domainSize[i]>=numberOfNodes) return false;
@@ -110,17 +102,6 @@ void enforceArcConsistency(int var, int val){
 		stk.push(pii(v, domainSize[v]));
 		if(forwardIterator!=-1) domainSize[v]=forwardIterator;
 	}
-	/*printf("After enforcement\n");
-	for(int i = 0 ;i < searchSubgraph.numberOfNodes;i++)
-		{
-			printf("%d: %d\n\n",i,domainSize[i]);
-			for(int j =0;j<domainSize[i];j++)
-			{
-				printf("%d ",searchCSP.domain[i][j]);
-			}
-			printf("\n");
-		}*/
-		
 }
 
 void restoreDomains(int nxt){
@@ -131,10 +112,7 @@ void restoreDomains(int nxt){
 		stkTop = stk.top();
 		stk.pop();
 		domainSize[stkTop.first] = stkTop.second;
-	}/*
-	printf("After restoration \n");
-	for(int i = 0 ;i < searchSubgraph.numberOfNodes;i++)
-	printf("%d\n\n",domainSize[i]);*/
+	}
 }
 
 int constrainingDegreeOfValue(int nxt,int value){ //Number of additional constraints imposed by assigining value to node
@@ -189,14 +167,11 @@ inline int findNextVariable(bool fg){ //Returns most constrained, most constrain
 
 
 bool search(int assignedNodes){
-	//cout<<"Assigned Nodes="<<assignedNodes<<endl;
 	assert(domainSizeConsistent(searchSubgraph));
 	if(assignedNodes==searchSubgraph.numberOfNodes){
-		 //cout<<"Returning true\n";
 		 return true; //All variables have had valid assignments
 	}
 	int nxt=findNextVariable(false); //Next node to assign value to
-	//printf("Next variable=%d\n", nxt);
 	if(domainSize[nxt]==0) return false;
 	int sz=domainSize[nxt];
 	for(int i=0; i<sz; i++){
@@ -209,7 +184,6 @@ bool search(int assignedNodes){
 		if(markNodes[domainOrder[i].value])break;
 		isAssigned[nxt]=true;
 		sol[nxt]=domainOrder[i].value;
-		printf("Assigning %d to %d\n", sol[nxt], nxt);
 		markNodes[sol[nxt]] = true;
 		enforceArcConsistency(nxt,domainOrder[i].value);
 		assert(domainSizeConsistent(searchSubgraph));
@@ -217,13 +191,12 @@ bool search(int assignedNodes){
 		restoreDomains(nxt);
 		markNodes[sol[nxt]] = false;
 		isAssigned[nxt]=false;
-		//printf("Domains restored\n");
 		if(res) return true;
 	}
 	return false;
 }
 
-bool isFrequent(Subgraphs sub, CSP csp)
+bool isFrequent(Subgraphs sub, CSP &csp)
 {
 	marked.clear();
 	searchSubgraph=sub;
@@ -234,48 +207,67 @@ bool isFrequent(Subgraphs sub, CSP csp)
 	}
 	while(!stk.empty()) stk.pop();
 	int count, nxt;
+	int forwardIterator, sz;
 	for(int loops=0; loops<sub.numberOfNodes; loops++){
 		nxt=findNextVariable(true);
-		//cout<<"Testing for "<<nxt<<endl;
 		count=0;
-		for(int i=0; i<(int)searchCSP.domain[nxt].size(); i++){
-			printf("Considering assignment of %d to %d\n", searchCSP.domain[nxt][i], nxt);
+		iterationNo++;
+		sz =  searchCSP.domain[nxt].size();
+		for(int i=0; i<sz; i++){
 			if(marked.find(pii(nxt, searchCSP.domain[nxt][i]))!=marked.end()){
-				printf("A valid isomorphism assigning %d to %d has already been computed\n", searchCSP.domain[nxt][i], nxt);
 				count++;
+				if(count==(int)threshold) break;
 				continue;
 			}
-			if(markNodes[searchCSP.domain[nxt][i]])
-			{
-				assert(false);
-				printf("Breaking\n");
-				break;
-			}
-			printf("Assigning it\n");
 			isAssigned[nxt]=true;
 			sol[nxt]=searchCSP.domain[nxt][i];
 			markNodes[searchCSP.domain[nxt][i]] = true;
-			printf("Assigning %d to %d\n", sol[nxt], nxt);
 			assert(domainSizeConsistent(searchSubgraph));
 			enforceArcConsistency(nxt,searchCSP.domain[nxt][i]);
 			assert(domainSizeConsistent(searchSubgraph));
-			//puts("Arc consistency enforced\n");
 			if(search(1)){
 				count++;
-				for(int i=0; i<searchSubgraph.numberOfNodes; i++){
-					marked.insert(pii(i, sol[i]));
+				for(int j=0; j<searchSubgraph.numberOfNodes; j++){
+					marked.insert(pii(j, sol[j]));
 				}
+			}
+			else{
+				toBeDeleted[sol[nxt]] = iterationNo;
 			}
 			restoreDomains(nxt);
 			markNodes[sol[nxt]] = false;
-			//printf("Domains restored\n");
 			isAssigned[nxt]=false;
 			assert(domainSizeConsistent(searchSubgraph));
 			if(count==(int)threshold) break;
 		}
-		printf("Count of %d: %d\n\n",nxt,count);
-		if(count<(int)threshold) return false;
+		forwardIterator = -1;
+		for(int i = 0;i < sz;i++){
+			if(toBeDeleted[searchCSP.domain[nxt][i]] == iterationNo){
+				if(forwardIterator == -1){
+					forwardIterator = i;
+				}
+			}
+			else{
+				if(forwardIterator != -1){
+					swap(searchCSP.domain[nxt][i],searchCSP.domain[nxt][forwardIterator]);
+					forwardIterator++;
+				}
+			}
+		}
+		if(forwardIterator != -1)
+		{
+			for(int i = forwardIterator;i < sz;i++)
+			{
+				searchCSP.domain[nxt].pop_back();
+			}
+		}
+		searchCSP.mnSize = min((unsigned int)searchCSP.domain[nxt].size(),searchCSP.mnSize);
+		domainSize[nxt] = searchCSP.domain[nxt].size();
+		if(count<(int)threshold){
+			return false;
+		}
 		domainTested[nxt]=true;
 	}
+	csp = searchCSP;
 	return true;
 }

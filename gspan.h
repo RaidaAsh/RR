@@ -5,6 +5,7 @@ int globalVariable = 0;
 
 inline bool userWantsToTerminate(){
 	char terminator[5];
+	assert(false);
 	printf("Do you want to terminate?\n");
 	cin>>terminator;
 	return (terminator[0] == 'y');
@@ -18,33 +19,27 @@ inline bool randomTermination(){
 void subgraphExtension(Subgraphs currSubgraph, CSP csp){
 	//globalVariable++;
 	//if((globalVariable%10)==0) printf("%d\n", globalVariable);
-	/*if(currSubgraph.numberOfEdges==1)*/ assert(incomingEdgesConsistent(currSubgraph) && edgesConsistent(currSubgraph) && domainConsistent(csp));
+	/*if(currSubgraph.numberOfEdges==1)*/ //assert(incomingEdgesConsistent(currSubgraph) && edgesConsistent(currSubgraph) && domainConsistent(csp));
 	//else assert(incomingEdgesConsistent(currSubgraph) && edgesConsistent(currSubgraph));
-	printSubgraph(currSubgraph);
-	printCSP(csp);
+	//printSubgraph(currSubgraph);
+	//printCSP(csp);
 	/*if(userWantsToTerminate())
 	{
 		printf("Terminated\n");
 		return;
 	}*/
+	if(csp.mnSize<(unsigned int)threshold){
+		//printf("Infrequent\n");
+		return;
+	}
 	if(!isFrequent(currSubgraph,csp)){
-		printf("Infrequent\n");
+		//printf("Infrequent\n");
 		return;
 	}
 	else{
-		printf("Frequent : %d\n",currSubgraph.numberOfNodes);
+		//printf("Frequent : %d\n",currSubgraph.numberOfNodes);
 		freqSubgraphs.push_back(currSubgraph);
 	}
-	//char ch = getchar();
-	//ch = getchar();
-	//if(ch){}
-	//else{}
-	/*if(randomTermination()){
-		return;
-	}*/
-	
-	
-	
 	
 	Subgraphs newSubgraph;
 	int currNode;
@@ -109,10 +104,10 @@ void gSpanInit()
 	{
 		clearSubgraph(newSubgraph);		
 		initializeSingleEdgeGraph(distinctEdges[leastEdgeRemaining], newSubgraph);
-		csp=findDomain(leastEdgeRemaining);
-		printf("New Edge: %d %d %d\n", distinctEdges[leastEdgeRemaining].u, distinctEdges[leastEdgeRemaining].v, distinctEdges[leastEdgeRemaining].edgeLabel); 
-		printCSP(csp);
+		//printf("New Edge: %d %d %d\n", distinctEdges[leastEdgeRemaining].u, distinctEdges[leastEdgeRemaining].v, distinctEdges[leastEdgeRemaining].edgeLabel);
+		csp=findDomain(leastEdgeRemaining); 
+		//printCSP(csp);
 		subgraphExtension(newSubgraph,csp);
-		printf("Done with this edge\n");
+		//printf("Done with this edge\n");
 	}
 }

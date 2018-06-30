@@ -18,7 +18,6 @@ void printCSP(CSP csp){
 void printSubgraph(Subgraphs currSubgraph)
 {
 	printf("Subgraph:\n");
-	//getchar();
 	printf("\nNodes in subgraph: %d\n Edges in Subgraph: %d\n",currSubgraph.numberOfNodes, currSubgraph.numberOfEdges);
 	printf("\nThe edges in the subgraph are\n"); 
 	for(int i = 0;i < currSubgraph.numberOfNodes;i++)

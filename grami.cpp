@@ -2,16 +2,16 @@
 /**********************************************************************/
 
 void printFrequentSubgraphs(){
-	printf("Frequent Subgraphs:\n");
+	printf("Frequent Subgraphs:\nNumber of subgraphs %d\n\n",(int)freqSubgraphs.size());
 	for(int i=0; i<(int)freqSubgraphs.size(); i++){
 		printSubgraph(freqSubgraphs[i]);
 	}
 }
 
 int main(){
-	//freopen("bigin.txt", "r", stdin);
-	freopen("setout5.txt","w",stdout);
-	srand(time(NULL));
+	freopen("bigIn.txt", "r", stdin);
+	freopen("setout4.1.txt","w",stdout);
+	//srand(time(NULL));
 	takeInput();
 	//printIncomingNodes();
 	//printOutgoingNodes();
