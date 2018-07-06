@@ -40,15 +40,22 @@ CSPValues domainOrder[NODES];
 stack <pii> stk;
 bool markNodes[NODES];
 long long int toBeDeleted[NODES],iterationNo;
+
 bool domainSizeConsistent(Subgraphs sub){
 	for(int i=0; i<(int)sub.numberOfNodes; i++){
-		if(domainSize[i]<0 || domainSize[i]>=numberOfNodes) return false;
+		if(domainSize[i]<0 || domainSize[i]>numberOfNodes){
+			//printf("Domain Size of %d is %d\n", i, domainSize[i]);
+			return false;
+		}
 	}
 	int val;
 	for(int i=0; i<(int)searchCSP.domain.size(); i++){
-		for(int j=0; j<(int)domainSize[i]; j++){
+		for(int j=0; j<(int)min(domainSize[i], (int)searchCSP.domain[i].size()); j++){
 			val=searchCSP.domain[i][j];
-			if(val<0 || val>=numberOfNodes) return false;
+			if(val<0 || val>=numberOfNodes){
+				//printf("Domain of %d contains %d\n", i, val);
+				return false;
+			}
 		}
 	}
 	return true;
@@ -198,38 +205,73 @@ bool search(int assignedNodes){
 
 bool isFrequent(Subgraphs sub, CSP &csp)
 {
-	marked.clear();
+	marked.clear(); //No assignments are marked initially
+	
 	searchSubgraph=sub;
-	searchCSP=csp;
+	searchCSP=csp;  //Saving the subgraph and csp in global data structures for fast access
+	
 	for(int i=0; i<sub.numberOfNodes; i++){
-		domainSize[i]=searchCSP.domain[i].size();
-		domainTested[i] = false;
+		domainSize[i]=searchCSP.domain[i].size(); //Initialize the valid domain size of each node
+		domainTested[i] = false;  //Initially no node of the subgraph has had its domains checked
 	}
 	while(!stk.empty()) stk.pop();
+	
 	int count, nxt;
 	int forwardIterator, sz;
-	for(int loops=0; loops<sub.numberOfNodes; loops++){
-		nxt=findNextVariable(true);
-		count=0;
+	
+	
+	for(int loops=0; loops<sub.numberOfNodes; loops++){ //Loop over all nodes
+		nxt=findNextVariable(true); //Find variable to test domain
+		
+		//DEBUG STARTS
+		printf("Testing %d's domain\n", nxt);
+		//DEBUG ENDS
+		
+		count=0; //Tracks number of valid assignments for nxt
+		
 		iterationNo++;
 		sz =  searchCSP.domain[nxt].size();
-		for(int i=0; i<sz; i++){
-			if(marked.find(pii(nxt, searchCSP.domain[nxt][i]))!=marked.end()){
-				count++;
-				if(count==(int)threshold) break;
+		
+		for(int i=0; i<sz; i++){ //Loop over all domain elements of nxt
+			
+			//DEBUG STARTS
+			printf("Considering assignment of %d to %d\n", i, nxt);
+			//DEBUG ENDS
+			
+			if(marked.find(pii(nxt, searchCSP.domain[nxt][i]))!=marked.end()){  //If a valid solution satisfying this assignment
+																				//has already been found, no need to search again
+ 				count++;
+ 				
+				if(count==(int)threshold) break; //If count already reaches threshold, no need to search again
 				continue;
+			
 			}
+			
 			isAssigned[nxt]=true;
 			sol[nxt]=searchCSP.domain[nxt][i];
 			markNodes[searchCSP.domain[nxt][i]] = true;
-			assert(domainSizeConsistent(searchSubgraph));
 			enforceArcConsistency(nxt,searchCSP.domain[nxt][i]);
-			assert(domainSizeConsistent(searchSubgraph));
+			
 			if(search(1)){
 				count++;
+				
+				//DEBUG STARTS
+				puts("Match found:");
+				//DEBUG ENDS
+				
 				for(int j=0; j<searchSubgraph.numberOfNodes; j++){
+					
+					//DEBUG STARTS
+					printf("%d ", sol[j]);
+					//DEBUG ENDS
+					
 					marked.insert(pii(j, sol[j]));
 				}
+				
+				//DEBUG STARTS
+				puts("");
+				//DEBUG ENDS
+				
 			}
 			else{
 				toBeDeleted[sol[nxt]] = iterationNo;
@@ -260,9 +302,10 @@ bool isFrequent(Subgraphs sub, CSP &csp)
 			{
 				searchCSP.domain[nxt].pop_back();
 			}
+			searchCSP.mnSize = min((unsigned int)searchCSP.domain[nxt].size(),searchCSP.mnSize);
+			domainSize[nxt] = searchCSP.domain[nxt].size();
 		}
-		searchCSP.mnSize = min((unsigned int)searchCSP.domain[nxt].size(),searchCSP.mnSize);
-		domainSize[nxt] = searchCSP.domain[nxt].size();
+		
 		if(count<(int)threshold){
 			return false;
 		}

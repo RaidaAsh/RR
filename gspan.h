@@ -1,43 +1,36 @@
 #include "csp.h"
 
 
-int globalVariable = 0;
-
-inline bool userWantsToTerminate(){
-	char terminator[5];
-	assert(false);
-	printf("Do you want to terminate?\n");
-	cin>>terminator;
-	return (terminator[0] == 'y');
-}
-
-inline bool randomTermination(){
-	return (rand()%100)<80;
-}
-
-
 void subgraphExtension(Subgraphs currSubgraph, CSP csp){
-	//globalVariable++;
-	//if((globalVariable%10)==0) printf("%d\n", globalVariable);
-	/*if(currSubgraph.numberOfEdges==1)*/ //assert(incomingEdgesConsistent(currSubgraph) && edgesConsistent(currSubgraph) && domainConsistent(csp));
-	//else assert(incomingEdgesConsistent(currSubgraph) && edgesConsistent(currSubgraph));
-	//printSubgraph(currSubgraph);
-	//printCSP(csp);
-	/*if(userWantsToTerminate())
-	{
-		printf("Terminated\n");
-		return;
-	}*/
+	
+	//DEBUG STARTS
+	puts("Extended Subgraph");
+	printSubgraph(currSubgraph);
+	printCSP(csp);
+	//DEBUG ENDS
+	
 	if(csp.mnSize<(unsigned int)threshold){
-		//printf("Infrequent\n");
+		
+		//DEBUG STARTS
+		printf("Subgraph's mininimum domain size is too small, so it is infrequent\n");
+		//DEBUG ENDS
+		
 		return;
 	}
 	if(!isFrequent(currSubgraph,csp)){
-		//printf("Infrequent\n");
+		
+		//DEBUG STARTS
+		printf("Subgraph's deemed infrequent by csp\n");
+		//DEBUG ENDS
+		
 		return;
 	}
 	else{
-		//printf("Frequent : %d\n",currSubgraph.numberOfNodes);
+		
+		//DEBUG STARTS
+		printf("This subgraph is frequent\n");
+		//DEBUG ENDS
+		
 		freqSubgraphs.push_back(currSubgraph);
 	}
 	
@@ -45,27 +38,36 @@ void subgraphExtension(Subgraphs currSubgraph, CSP csp){
 	int currNode;
 	int low, sz;
 	CSP newCsp;
+	
 	while(!currSubgraph.rightmostPath.empty()){
-		currNode=currSubgraph.rightmostPath.top();
+		
+		currNode=currSubgraph.rightmostPath.top(); //Node to be extended
+		
+		
+		//Considering backward extensions from current Node
 		sz=currSubgraph.adjNode[currNode].size();
-		low=(sz==0) ? 0 : currSubgraph.adjNode[currNode][sz-1]+1;
+		low=(sz==0) ? 0 : currSubgraph.adjNode[currNode][sz-1]+1; //low represents lowest non-adjacent node in the subgraph to which a backward edge may be drawn
+		
 		for(int i=low; i<currNode; i++){
 			for(int j=0; j<numberOfEdgeLabels; j++){
-				if(labelRelations.find(ppi(pii(currSubgraph.nodeLabels[currNode], currSubgraph.nodeLabels[i]), j))==labelRelations.end()) continue;
+				if(labelRelations.find(ppi(pii(currSubgraph.nodeLabels[currNode], currSubgraph.nodeLabels[i]), j))==labelRelations.end()) continue; //If such an edge doesn't exist in a graph. continue
 				newSubgraph=extendBackwardEdge(currSubgraph, currNode, i, j);
 				newCsp = domainAfterBackwardExtension(currNode,currSubgraph.nodeLabels[currNode],i,currSubgraph.nodeLabels[i],j,csp);
 				subgraphExtension(newSubgraph,newCsp);
 			}
 		}
+		
+		//Considering forward extensions from current Node
 		for(int i=0; i<numberOfNodeLabels; i++){
 			for(int j=0; j<numberOfEdgeLabels; j++){
-				if(labelRelations.find(ppi(pii(currSubgraph.nodeLabels[currNode], i), j))==labelRelations.end()) continue;
+				if(labelRelations.find(ppi(pii(currSubgraph.nodeLabels[currNode], i), j))==labelRelations.end()) continue; //If such an edge doesn't exist in a graph. continue
 				newSubgraph=extendForwardEdge(currSubgraph, currNode, currSubgraph.numberOfNodes, i, j);
 				newCsp=domainAfterForwardExtension(currNode, currSubgraph.nodeLabels[currNode], i, j, csp);
 				subgraphExtension(newSubgraph,newCsp);
 			}
 		}
-		currSubgraph.rightmostPath.pop();
+		
+		currSubgraph.rightmostPath.pop(); //All possible extensions from the current node have been made, popping it from the rightmost path
 	}
 }
 
@@ -109,5 +111,6 @@ void gSpanInit()
 		//printCSP(csp);
 		subgraphExtension(newSubgraph,csp);
 		//printf("Done with this edge\n");
+		labelRelations.erase(ppi(pii(nodeLabels[distinctEdges[leastEdgeRemaining].u], nodeLabels[distinctEdges[leastEdgeRemaining].v]), distinctEdges[leastEdgeRemaining].edgeLabel));
 	}
 }

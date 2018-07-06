@@ -9,8 +9,8 @@ void printFrequentSubgraphs(){
 }
 
 int main(){
-	freopen("bigIn.txt", "r", stdin);
-	freopen("setout4.1.txt","w",stdout);
+	freopen("inTest.txt", "r", stdin);
+	freopen("outTest.txt","w",stdout);
 	//srand(time(NULL));
 	takeInput();
 	//printIncomingNodes();
