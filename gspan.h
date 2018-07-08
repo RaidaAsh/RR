@@ -50,7 +50,7 @@ void subgraphExtension(Subgraphs currSubgraph, CSP csp){
 		
 		for(int i=low; i<currNode; i++){
 			for(int j=0; j<numberOfEdgeLabels; j++){
-				if(labelRelations.find(ppi(pii(currSubgraph.nodeLabels[currNode], currSubgraph.nodeLabels[i]), j))==labelRelations.end()) continue; //If such an edge doesn't exist in a graph. continue
+				//if(labelRelations.find(ppi(pii(currSubgraph.nodeLabels[currNode], currSubgraph.nodeLabels[i]), j))==labelRelations.end()) continue; //If such an edge doesn't exist in a graph. continue
 				newSubgraph=extendBackwardEdge(currSubgraph, currNode, i, j);
 				newCsp = domainAfterBackwardExtension(currNode,currSubgraph.nodeLabels[currNode],i,currSubgraph.nodeLabels[i],j,csp);
 				subgraphExtension(newSubgraph,newCsp);
@@ -60,7 +60,7 @@ void subgraphExtension(Subgraphs currSubgraph, CSP csp){
 		//Considering forward extensions from current Node
 		for(int i=0; i<numberOfNodeLabels; i++){
 			for(int j=0; j<numberOfEdgeLabels; j++){
-				if(labelRelations.find(ppi(pii(currSubgraph.nodeLabels[currNode], i), j))==labelRelations.end()) continue; //If such an edge doesn't exist in a graph. continue
+				//if(labelRelations.find(ppi(pii(currSubgraph.nodeLabels[currNode], i), j))==labelRelations.end()) continue; //If such an edge doesn't exist in a graph. continue
 				newSubgraph=extendForwardEdge(currSubgraph, currNode, currSubgraph.numberOfNodes, i, j);
 				newCsp=domainAfterForwardExtension(currNode, currSubgraph.nodeLabels[currNode], i, j, csp);
 				subgraphExtension(newSubgraph,newCsp);
@@ -111,6 +111,6 @@ void gSpanInit()
 		//printCSP(csp);
 		subgraphExtension(newSubgraph,csp);
 		//printf("Done with this edge\n");
-		labelRelations.erase(ppi(pii(nodeLabels[distinctEdges[leastEdgeRemaining].u], nodeLabels[distinctEdges[leastEdgeRemaining].v]), distinctEdges[leastEdgeRemaining].edgeLabel));
+		//labelRelations.erase(ppi(pii(nodeLabels[distinctEdges[leastEdgeRemaining].u], nodeLabels[distinctEdges[leastEdgeRemaining].v]), distinctEdges[leastEdgeRemaining].edgeLabel));
 	}
 }

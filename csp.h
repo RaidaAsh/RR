@@ -230,27 +230,27 @@ bool isFrequent(Subgraphs sub, CSP &csp)
 		count=0; //Tracks number of valid assignments for nxt
 		
 		iterationNo++;
-		sz =  searchCSP.domain[nxt].size();
+		sz =  csp.domain[nxt].size();
 		
 		for(int i=0; i<sz; i++){ //Loop over all domain elements of nxt
 			
 			//DEBUG STARTS
-			printf("Considering assignment of %d to %d\n", i, nxt);
+			printf("Considering assignment of %d to %d\n", csp.domain[nxt][i], nxt);
 			//DEBUG ENDS
 			
-			if(marked.find(pii(nxt, searchCSP.domain[nxt][i]))!=marked.end()){  //If a valid solution satisfying this assignment
+			if(marked.find(pii(nxt, csp.domain[nxt][i]))!=marked.end()){  //If a valid solution satisfying this assignment
 																				//has already been found, no need to search again
  				count++;
- 				
+ 				printf("A valid solution assigning %d to %d has already been found\n", csp.domain[nxt][i], nxt);
 				if(count==(int)threshold) break; //If count already reaches threshold, no need to search again
 				continue;
 			
 			}
 			
 			isAssigned[nxt]=true;
-			sol[nxt]=searchCSP.domain[nxt][i];
-			markNodes[searchCSP.domain[nxt][i]] = true;
-			enforceArcConsistency(nxt,searchCSP.domain[nxt][i]);
+			sol[nxt]=csp.domain[nxt][i];
+			markNodes[csp.domain[nxt][i]] = true;
+			enforceArcConsistency(nxt,csp.domain[nxt][i]);
 			
 			if(search(1)){
 				count++;
@@ -259,7 +259,7 @@ bool isFrequent(Subgraphs sub, CSP &csp)
 				puts("Match found:");
 				//DEBUG ENDS
 				
-				for(int j=0; j<searchSubgraph.numberOfNodes; j++){
+				for(int j=0; j<sub.numberOfNodes; j++){
 					
 					//DEBUG STARTS
 					printf("%d ", sol[j]);
@@ -275,6 +275,10 @@ bool isFrequent(Subgraphs sub, CSP &csp)
 			}
 			else{
 				toBeDeleted[sol[nxt]] = iterationNo;
+				
+				//DEBUG STARTS
+				printf("%d is to be removed from %d's domain\n", sol[nxt], nxt);
+				//DEBUG ENDS
 			}
 			restoreDomains(nxt);
 			markNodes[sol[nxt]] = false;
@@ -304,6 +308,14 @@ bool isFrequent(Subgraphs sub, CSP &csp)
 			}
 			searchCSP.mnSize = min((unsigned int)searchCSP.domain[nxt].size(),searchCSP.mnSize);
 			domainSize[nxt] = searchCSP.domain[nxt].size();
+			
+			//DEBUG STARTS
+			printf("Domain of %d contains:\n", nxt); 
+			for(int i=0; i<(int)searchCSP.domain[nxt].size(); i++){
+				printf("%d ", searchCSP.domain[nxt][i]);
+			}
+			puts("");
+			//DEBUG ENDS
 		}
 		
 		if(count<(int)threshold){
