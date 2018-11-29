@@ -1,2 +1,1 @@
-# RRG
-# Sad
+An unfinished implementation of WGraMi
